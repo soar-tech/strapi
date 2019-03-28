@@ -84,6 +84,7 @@ module.exports = {
             '/3.x.x/guides/authentication',
             '/3.x.x/configurations/configurations',
             '/3.x.x/guides/controllers',
+            '/3.x.x/guides/database',
             '/3.x.x/guides/deployment',
             '/3.x.x/guides/email',
             '/3.x.x/guides/upload',

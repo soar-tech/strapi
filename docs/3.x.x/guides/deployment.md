@@ -1,12 +1,6 @@
 # Deployment
 
-### Docker
-
-::: tip
-You can also deploy using [Docker](https://hub.docker.com/r/strapi/strapi)
-:::
-
-The method below describes regular deployment using the built-in mechanisms.
+## Setup
 
 #### #1 - Configure
 
@@ -75,3 +69,27 @@ We highly recommend to use [pm2](https://github.com/Unitech/pm2/) to manage your
 ### Advanced configurations
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](../advanced/customize-admin.md#deployment).
+
+## Heroku
+
+Coming soon.
+
+## AWS
+
+Coming soon.
+
+## Digital Ocean
+
+Coming soon.
+
+## Azure
+
+Coming soon.
+
+## Docker
+
+::: tip
+You can also deploy using [Docker](https://hub.docker.com/r/strapi/strapi)
+:::
+
+The method below describes regular deployment using the built-in mechanisms.
