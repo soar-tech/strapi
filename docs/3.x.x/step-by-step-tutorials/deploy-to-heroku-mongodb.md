@@ -1,4 +1,8 @@
-# Deploying a Strapi headless CMS application on Heroku
+# Deploying Strapi with MongoDB to Heroku
+
+
+
+======================
 
 This tutorial is a detailed step-by-step instruction on deploying a Strapi headless CMS app to [Heroku](https://www.heroku.com/). Our app will use Strapi as the headless CMS and MongoDB for the database. We will host Strapi on Heroku and the [MongoDB database](https://www.mongodb.com/cloud/atlas) database at [MongoDB Atlas free 512 MB account](https://www.mongodb.com/download-center). At the end, you will be expose the API endpoints for your app.
 

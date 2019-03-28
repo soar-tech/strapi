@@ -120,6 +120,7 @@ module.exports = {
             '/3.x.x/step-by-step-tutorials/connect-to-postgres-locally',
             '/3.x.x/step-by-step-tutorials/deploy-to-heroku-mongodb',
             '/3.x.x/step-by-step-tutorials/deploy-strapi-to-heroku',
+            '/3.x.x/step-by-step-tutorials/create-first-user',
 
           ],
         },
