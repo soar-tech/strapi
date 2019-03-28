@@ -111,6 +111,18 @@ module.exports = {
             '/3.x.x/advanced/usage-tracking',
           ],
         },
+        { 
+          collapsable: true,
+          title: 'Step-by-Step Tutorials',
+          children: [
+            '/3.x.x/step-by-step-tutorials/install-strapi-globally',
+            '/3.x.x/step-by-step-tutorials/connect-to-mongoDB-locally',
+            '/3.x.x/step-by-step-tutorials/connect-to-postgres-locally',
+            '/3.x.x/step-by-step-tutorials/deploy-to-heroku-mongodb',
+            '/3.x.x/step-by-step-tutorials/deploy-strapi-to-heroku',
+
+          ],
+        },
         {
           collapsable: true,
           title: '🔌 Plugin Development',

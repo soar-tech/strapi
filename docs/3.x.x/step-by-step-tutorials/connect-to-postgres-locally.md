@@ -1,0 +1,1 @@
+# Connect Strapi to Postgres locally
