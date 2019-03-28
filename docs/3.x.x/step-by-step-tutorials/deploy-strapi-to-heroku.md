@@ -209,6 +209,11 @@ MongoDB Enterprise ClusterCMSStrapiHeroku-shard-0:PRIMARY>
 ```
 If you got the above message, you are ready to continue. If not, please consult the [MongoDB Atlas troubleshooting documentation](https://dochub.mongodb.org/core/atlas-connection-troubleshooting).
 
+
+
+
+
+
 Now that your MongoDB Atlas database is set-up and working, we need to record five parameters located in your Atlas dashboard and then we will be ready to configure Strapi to work with your new database.
 
 We need these five parameters for the Heroku configuration settings: **Database Username**, **Database Password**, **Database Port**, **Database Host** and **Database Name**.
