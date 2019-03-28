@@ -1,36 +1,100 @@
 # Deploying Strapi to Heroku
 
-This tutorial is a detailed step-by-step instruction for deploying a Strapi headless CMS app to [Heroku](https://www.heroku.com/). Our app will use Strapi as the headless CMS and Heroku to act as a hosting server for our Strapi project. There are multiple databases that work well with Strapi, and below we have instructions for using each.  By the end of this tutorial, you will have a live Strapi App on Heroku with the API Endpoints exposed to a Content Type. *******EDIT***** You will be able to use a database of your choice in actual deployment. Locally, the set-up will look like this Local Development Environment:
+This tutorial is a detailed step-by-step instruction for deploying a Strapi headless CMS app to [Heroku](https://www.heroku.com/). Our app will use Strapi as the headless CMS and Heroku to act as a hosting server for our Strapi project. There are multiple databases that work well with Strapi and Heroku. Below we have instructions for using each.  By the end of this tutorial, you will have a live Strapi App on Heroku with the API Endpoints exposed for a Content Type. 
 
 ## Minimum Requirements
 
 You should have first successfully completed the following steps:
 
 1. Installed [Node.js and NPM](https://nodejs.org/en/), these are the basic [installation requirements for Strapi](/3.x.x/getting-started/install-requirements.html#basic-installation-requirements). 
-2. In the event you do not have Git installed, please [download and install Git](https://git-scm.com/downloads) versioning for your operating system. You can learn more about Git [here](https://guides.github.com/introduction/git-handbook/).
+2. In the event you do not have Git installed, please [download and install Git](https://git-scm.com/downloads) for your operating system. You can learn more about Git [here](https://guides.github.com/introduction/git-handbook/).
 3. Have [Strapi installed globally](/3.x.x/step-by-step-tutorials/install-strapi-globally.html#install-strapi-globally).
 
 ---
 
 **Table of contents:**
 
-1. [Set Up local development environment](#set-up-local-development-environment)
-2. [Initialize Git and commit project](#initialize-git-and-commit-project)
+1. [Heroku account and app project set-up](#heroku-account-and-app-project-set-up)
+2. [Set Up local development environment](#set-up-local-development-environment)
 3. 
 4. 
-5. [Setting Up Heroku with MongoDB](#setting-up-heroku-and-mongodb-atlas)
+5. [Initialize Git and commit project](#initialize-git-and-commit-project)
+6. 
+7. 
+8. [Setting Up Heroku with MongoDB](#setting-up-heroku-and-mongodb-atlas)
+
+---
+
+## Heroku account and app project set-up 
+
+We will first create an Heroku account and create a Heroku app. 
+
+1. Sign up and create a [free Heroku Account](https://www.heroku.com/). 
+2. Login to your Heroku account and if this your first app, you will see a button that says `Create new app`, otherwise click on the `New`button in the top right (and click `Create New App`), complete the following steps:
+  - App name : eg. `demo-strapi-cms` or `demo-strapi-mongo`[Choose a new unique name for your app.  This will be part of the URL. If you don't Heroku will create a unique name for you. Eg. `fjord-crossings-34990`] 
+  - Choose a region : `Europe` [Choose the region closest to you.]
+  - The next screen presents options for a `Deployment method`. We will use `Heroku Git`. 
+3. You will need download and [install the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli). Just follow instructions.
+4. After you have installed the Heroku CLI on your development environment, verify the installation with `heroku --version`:
+
+```bash 
+heroku --version
+heroku/7.22.7 darwin-x64 node-v11.10.1 
+```
+
+5. Next, you need to login to Heroku:
+
+```bash
+heroku login
+heroku: Press any key to open up the browser to login or q to exit:
+```
+
+6. After you press _any key_, your browser will display a **_Log in to the Heroku CLI_** page with a `Log in` button. Click it, close the browser tab, and return to your command line. You should see something like this:
+
+```bash
+Opening browser to https://cli-auth.heroku.com/auth/browser/c1aed8-ce66-41ae-9fbc-5c742359
+Logging in... done
+Logged in as david@strapi.io
+```
+
+You are now ready to continue the installation and set-up your local development environment.
 
 ## Set-up local development environment
 
-A convenient set-up when developing applications with Strapi and Heroku, is to develop Strapi on your local dev environment using a SQLite database. In this way, you avoid unnecessary set-up and configuration steps to develop your application. After completing the following steps, your set-up will look like this Local Development Environment:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A convenient set-up when developing applications with Strapi and Heroku, is to develop Strapi on your local dev environment using a SQLite database. In this way, you avoid unnecessary set-up and configuration steps to develop your application. 
+
+::: warning NOTE
+These steps for creating a new project will not work if you are choosing a [MongoDB database](#strapi-and-mongodb). If you would like to use a MongoDB database please go to the section, [Strapi and Mongo on local developement](#strapi-and-mongodb). 
+:::
+
+
+
+After completing the following steps, your set-up will look like this Local Development Environment:
 
 <img src="../assets/heroku-strapi-tutorial/strapi-database-api-local.png" width="70%" style="display: block; margin: auto;">
 
 You will have Strapi installed on your computer and the relationship looks like this.  Strapi "talks" to a database (SQLite) and, with permissions properly set, your API routes are exposed to your browser at [localhost:1337](http://localhost:1337/).
 
-::: warning NOTE
-These steps for creating a new project will not work if you are choosing a MongoDB database. If you would like to use a MongoDB database please go to the section, [Strapi and Mongo on local developement](#strapi-and-mongodb) 
-:::
+
 
 ### 1. Create a new project
 
@@ -85,38 +149,7 @@ strapi:cms david$
 ```
 
 
-## Create a Heroku account and set-up Heroku app
 
-1. Sign up and create a [free Heroku Account](https://www.heroku.com/). Then complete the following steps to install, configure and prepare Heroku on your development environment. 
-    - Login to your Heroku Dashboard and if this your first app, then you will see a button that says `Create new app`, otherwise click on the `New`button in the top right (and click `Create New App`), complete the following:
-        - App name : `demo-strapi-cms`[Choose a new unique name for your app.  This will be part of the URL. If you don't Heroku will create a unique name for you. Eg. `fjord-crossings-34990`] 
-        - Choose a region : `Europe` [Choose the region closest to you.]
-        - The next screen presents options for a `Deployment method`. We will use `Heroku Git`. 
-        - You will need download and [install the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli). Just follow instructions.
-        
-After you have installed the Heroku CLI on your development environment, verify the installation with `heroku --version`:
-
-```bash 
-heroku --version
-heroku/7.22.7 darwin-x64 node-v11.10.1 
-```
-
-Next, you need to login to Heroku:
-
-```bash
-heroku login
-heroku: Press any key to open up the browser to login or q to exit:
-```
-
-After you press any key, your browser will display a **_Log in to the Heroku CLI_** page with a `Log in` button. Click it, close the browser tab, and return to your command line. You should see something like this:
-
-```bash
-Opening browser to https://cli-auth.heroku.com/auth/browser/c1aed8-ce66-41ae-9fbc-5c742359
-Logging in... done
-Logged in as david@strapi.io
-```
-
-You are now ready to continue the installation and set-up steps for the database of your choice. 
 
 ## Strapi and PostgreSQL 
 
@@ -141,10 +174,10 @@ We will set-up a database on a MongoDB Atlas free 512 MB account, which will be 
 1. Sign-up for a [free MongoDB Atlas account](https://www.mongodb.com/cloud/atlas). 
     - Log in to your account.
     - At your dashboard, click `Build a Cluster`, then from the pop-up, `Build my first cluster`.  Note: If you have already created a cluster on this account, you click on `Build a New Cluster`, in the top right.
-    - Choose a **Cloud Provider & Region**. We will choose **AWS**, and use the Dropdown to set the **Region**, notice that some Regions do not have a _free tier_. Choose a region nearest the region you _set-up earlier for Heroku_. 
-    - Then Select the **Cluster Tier**. We will select **Shared Sandbax**.
-    - Name your **Cluster Name**, we will use `ClusterCMSStrapiHeroku`
-    - Click `Create Cluster`. You will get a message that says, "Your cluster is being created..."
+    - Choose a **Cloud Provider & Region**. We will choose **AWS**, now scroll down and  set the **Region**, notice that some Regions do not have a _free tier_. Choose a region nearest the region you _set-up earlier for Heroku_.       <-----  **TODO: FIX THIS REFERENCE** 
+    - Then continue to scroll down and select the **Cluster Tier**. We will select **Shared Sandbax**.
+    - Lastly, and at the botto, name your **Cluster Name**, we will use `Strapi-Heroku`
+    - Click the green `Create Cluster` button. You will get a message that says, "Your cluster is being created..."
 
 2. After your **Cluster** has been created, go ahead and click on the `Security` tab (next to `Overview`):
     - Click the green `+ ADD NEW USER` button: 
@@ -182,35 +215,35 @@ We need these five parameters for the Heroku configuration settings: **Database 
 
 Let's locate each one and copy them to a notepad or text editor for later. 
 
-1. **Database Username**, this is the username we created earlier, in this case,
+1 **Database Name**, this is the _lowercase_ name of the Cluster Name we chose in MongDB Atlas, in this case,
+
+  _strapi-heroku_
+
+2. **Database Username**, this is the username we created earlier, in this case,
 
   _paulbocuse_
 
-2. **Database Password**, this is the password we created earlier, in this case,
+3. **Database Password**, this is the password we created earlier, in this case,
 
   _mySecretPassword_
 
 Click into your Clusters. Here you will see a Dashboard with different options and usage charts. 
 
-3. **Database Port**, we have nothing to locate for the port.  In fact, in Heroku it will be a _blank empty space_.
+4. **Database Port**, we have nothing to locate for the port.  In fact, in Heroku it will just be _empty_. 
 
-4. **Database Host** - This requires the following steps:
+5. **Database Host** - This requires the following steps:
 
     - From your Dashboard, under `Overview`, Click `CONNECT` and then `Connect Your Application`.
     - Under **Choose your driver version**, select **DRIVER** as `Node.js` and **VERSION** as `2.2.12 or later`
     - You will see something like this (under **Connection String Only**):
       
-      _`mongodb://paulbocuse: <password> @clustercmsstrapiheroku-shard-00-00-o606o.mongodb.net:27017,clustercmsstrapiheroku-shard-00-01-o606o.mongodb.net:27017,clustercmsstrapiheroku-shard-00-02-o606o.mongodb.net:27017/test?ssl=true&replicaSet=ClusterCMSStrapiHeroku-shard-0&authSource=admin&retryWrites=true`_
+      _`mongodb://paulbocuse:<password>@strapi-heroku-shard-00-00-o777o.mongodb.net:27017,strapi-heroku-shard-00-01-o606o.mongodb.net:27017,strapi-heroku-shard-00-02-o606o.mongodb.net:27017/test?ssl=true&replicaSet=Strapi-Heroku-shard-0&authSource=admin&retryWrites=true`_
 
       We are interested in everything **AFTER** the **@** symbol.  So in this case,
 
-      _`clustercmsstrapiheroku-shard-00-00-o606o.mongodb.net:27017,clustercmsstrapiheroku-shard-00-01-o606o.mongodb.net:27017,clustercmsstrapiheroku-shard-00-02-o606o.mongodb.net:27017/test?ssl=true&replicaSet=ClusterCMSStrapiHeroku-shard-0&authSource=admin&retryWrites=true`_
+      _`strapi-heroku-shard-00-00-o777o.mongodb.net:27017,strapi-heroku-shard-00-01-o606o.mongodb.net:27017,strapi-heroku-shard-00-02-o606o.mongodb.net:27017/test?ssl=true&replicaSet=Strapi-Heroku-shard-0&authSource=admin&retryWrites=true`_
 
-      This is our **Database Host** variable.
-
-5. **Database Name** - This is the same as the _Cluster Name_ we created earlier.  So in this case,
-
-      _ClusterCMSStrapiHeroku_
+      This is our **Database Host** variable.  
 
 Please keep these five MongoDB Atlas database variables for your account ready and available.  We will need them shortly to
 
@@ -228,7 +261,7 @@ Please keep these five MongoDB Atlas database variables for your account ready a
 
 We have to configure Strapi to connect all the database requirements that MongoDB Atlas needs.  We will add some option parameters to our `database.json` file found in `/Projects/cms/config/environments/database.json`.
 
-Open `/config/environments/production/database.json`.  These are your database connection settings.  We need to add a two `options` settings. 
+In your code editor, open `/config/environments/production/database.json`.  These are your database connection settings.  We need to add a two `options` settings. 
 
 The `package.json` file, initially looks like this:
 
@@ -262,7 +295,7 @@ Change `options`, to include the following.  Then save the file.
     }
 ```
 
-We are now ready to commit our changes. Use the following commands:
+We are now ready to commit our changes. From the root `Projects/cms` folder, use the following commands:  <---- **FIX THIS ALSO GIT INIT**
 
 ```bash
 git add .
@@ -274,7 +307,7 @@ We are now ready to deploy our local Strapi project to our existing Heroku proje
 
 ### 3. Deploy Strapi to Heroku
 
-We will now  deploy our existing **Strapi CMS project** to our existing **Heroku project**. 
+We will now  deploy our existing **Strapi CMS project** to our existing **Heroku project**.   **FIX THIS NEEDS TO FOLLOW HEROKU APP INSTALL**
 
 1. Navigate to the `cms/` project root. Now we will add this local Git repository (our project files) to the existing Heroku app. I named my project `demo-strapi-cms`. You will need your Heroku app name for the next steps:
 
@@ -308,25 +341,32 @@ To https://git.heroku.com/demo-strapi-cms.git
 
 ### Configure Heroku with MongoDB Atlas
 
-2. Now let`s [log into Heroku](https://id.heroku.com/login). You should see your app listed in the dashboard. Go ahead and click on it. We will now configure Heroku to access the MongoDB Atlas database you already created.
+2. Now let`s [log back into Heroku](https://id.heroku.com/login). You should see your app listed in the dashboard. Go ahead and click on it. We will now configure Heroku to access the MongoDB Atlas database you already created.
 
 Go ahead:
 - Click on `Settings`, and next to `Config Vars`, click on the button that says, `Reveal Config Vars`.
 - You will need to add five values that correspond to you `package.json` file and you **MongoDB Atlas** settings.  The five values are:
-    - DATABASE_HOST
-    - DATABASE_PORT
-    - DATABASE_NAME
-    - DATABASE_USERNAME
-    - DATABASE_PASSWORD
+
+|  KEY | VALUE  |  
+|---|---|
+| DATABASE_NAME | **strapi-heroku**  |   
+| DATABASE_USERNAME  | **paulbocuse**  |   
+| DATABASE_PASSWORD   | **mySecretPassword**  |   
+| DATABASE_PORT  |   |
+| DATABASE_HOST  | **strapi-heroku-shard-00-00-o777o.mongodb.net:27017,strapi-heroku-shard-00-01-o606o.mongodb.net:27017,strapi-heroku-shard-00-02-o606o.mongodb.net:27017/test?ssl=true&replicaSet=Strapi-Heroku-shard-0&authSource=admin&retryWrites=true**  |   
+
+**Note:** Please replace these above values with the actual values of your accounts.
 
 
+3. Open app
 
+You should now be able to see your app in the browser. 
+- Click back to `Overview`
+- Click the `Open app`
 
+If you see the Strapi **Welcome.** page for your app, you have correctly set-up, configured and deployed your Strapi project using MongoDB Atlas on Heroku!
 
-
-
-
-
+You can now create an admin user by click on the `/admin` from the **Welcome page.**
 
 
 
