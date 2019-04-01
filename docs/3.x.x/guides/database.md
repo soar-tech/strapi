@@ -12,7 +12,10 @@ Strapi gives you options in which database you can use. Strapi currently support
 2. [MongoDB Installation](#mongodb-installation)
     - [Install MongoDB locally](#install-mongodb-locally)
     - [Install on Atlas: MongoDB Atlas](#install-on-atlas-mongodb-atlas)
-
+    
+3. [PostgreSQL Installation](#postgresql-installation)
+    - [Install PostgreSQL locally](#install-postgresql-locally)
+    - [Install with Heroku Postgres](#install-with-heroku-postgres)
 ---
 
 ## SQLite Installation
@@ -402,3 +405,230 @@ git commit -am "Added environment options to production/database.json"
 ```
 
 You are now ready to deploy your Strapi project to an external hosting provider and use MongoDB Atlas as your database server.  
+
+
+## PostgreSQL Installation
+
+Strapi can be deployed using [PostgreSQL](https://www.postgresql.org/). Below you will find step-by-step guides for deploying your Strapi project with PostgreSQL. 
+
+(**Note:** Included are instructions to deploy PostgreSQL locally for development purposes, but most development can be done even easier by developing with [SQLite](#-install-sqlite-locally) and setting-up your local development environment using our single [Quick Start](#-install-sqlite-locally) command. The database related changes you can make within Strapi and SQLite will be compatible with your PostgreSQL production deployment.)
+
+### Install PostgreSQL locally
+
+::: warning Note
+
+If you already have PostgreSQL locally installed and running on your local development environment, you may simply skip to the [Install Strapi locally with PostgreSQL](#install-strapi-with-postgresql) section.
+
+:::
+
+For the purposes of these docs, we will review the installation steps for PostgreSQL on a Windows 10, Mac O/S (Mojave) and Linux Ubuntu 18.04. (You may always check the official [PostgreSQL documentation](https://www.postgresql.org/docs/), should you have a different O/S or if you have any additional questions.)
+
+::: windows
+**WINDOWS 10**
+
+### Install PostgreSQL on Windows 10
+
+
+
+::: 
+
+
+::: mac
+**MAC O/S 10.14 MOJAVE**
+
+### Install PostgreSQL on Mac
+
+Follow these steps to [install PostgreSQL onto your Mac](https://wiki.postgresql.org/wiki/Homebrew) developer environment: 
+
+1. Update brew and install PostgreSQL using the `brew` command:
+
+```bash
+brew update
+brew install postgres
+```
+
+2. Start `postgres` in the foreground (Skip this step and go to the next step to configure Postgres to start in the background each time you start your computer.):
+
+```bash
+pg_ctl -D /usr/local/var/postgres start
+```
+
+**Optional - Configure Postgres to start up automatically**
+
+These steps below will configure your Mac to start Postgres automatically whenever you start-up your computer:
+
+```bash
+mkdir -p ~/Library/LaunchAgents
+
+ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+```
+
+
+
+:::
+
+::: ubuntu
+**UBUNTU 18.04**
+
+### Install PostgreSQL on Ubuntu
+
+You can use the `apt` packaging system to install `PostgreSQL` onto your Ubuntu 18.04 development environment.  The steps are below:
+
+
+1. Update your local package index and install postgres with a recommended package called `-contrib` which adds a set of additional tools and capabalities.
+
+```bash
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+```
+
+2. PostgreSQL has a concept of `roles`, which is similar to the concept of `groups and users`.  The `roles` replaces `groups and users` in the Linux/Ubuntu environments when using `postgres`. Use the following command to switch to the `postgres` linux user and start using `postgres`:
+
+```bash
+sudo -i -u postgres
+```
+
+You should now be logged into postgress similar to this `postgres@david:~$`
+
+3. Configure `postgres` to recognize the same user name as used in the general Linux environment:
+
+```bash
+createuser --interactive
+- Enter name of role to add: david
+- Shall the new role be a superuser? (y/n) y
+```
+
+Your command prompt should be something like this `postgres@david:~$`.
+
+4. Now switch to the role you just created above, in this case `david`:
+
+```bash
+psql david
+```
+
+Next, exit from the postgres CLI, using the `\q` command:
+
+```bash
+david=# \q
+```
+
+
+You can now [test and troubleshoot postgres](#test-and-troubleshoot-your-postgresql-installation) on your local installation [here](http://localhost:8080/documentation/3.x.x/guides/database.html#test-and-troubleshoot-your-postgresql-installation).  
+
+ **Note:** On Ubuntu installations you can exit out of `psql` by using the `:` + `q` keys. 
+ Additionally, `su your-username` returns you from the `postgres` environment to the normal Ubuntu command line environment.
+
+
+:::
+
+
+### Test and troubleshoot your PostgreSQL installation
+
+Test your installation:
+
+After completing the steps for your operating system above, you should test your installation with the following steps using your command line:
+
+1. Test with the `psql`, you should get a version number, and login the postgres CLI:
+
+```bash
+psql (11.2)
+Type "help" for help.
+
+david=#
+```
+
+Next, exit from the postgres CLI, using the `\q` command:
+
+```bash
+david=# \q
+```
+
+2. Create, list and delete a database (these commands are **NOT** run from the postgres CLI - but from command line prompt `$`):
+
+- `createdb` creates a database, eg. `createdb strapi-cms`
+- `psql -U postgres -l` lists all databases
+- `dropdb` deletes a database , eg. `dropdb strapi-cms `
+ 
+```bash
+createdb strapi-cms     
+psql -U postgres -l 
+
+List of databases
+    Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
+------------+-------+----------+-------------+-------------+-------------------
+ david      | david | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ postgres   | david | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ strapi-cms | david | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+(3 rows)
+
+dropdb strapi-cms 
+psql -U postgres -l 
+
+                              List of databases
+   Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
+-----------+-------+----------+-------------+-------------+-------------------
+ david     | david | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ postgres  | david | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
+ (2 rows)
+```
+
+
+
+
+**Troubleshooting**
+
+There are a few common installation issues that can arise when you install postgreSQL for the first time. If you have an issue see if it is below:
+
+**a.** At anypoint when trying to create, list or delete a database, you get - `psql: FATAL:  role "postgres" does not exist`, do the following:
+
+```bash
+-- psql: FATAL:  role "postgres" does not exist
+createuser -s postgres
+```
+**b.** If you unknowingly installed a newer version of `postgres` on top an older version, you may get errors and bugs. If you are sure you do not need any of the `postgres` related databases, it is often easiest to delete all versions of `postgres` and reinstall cleanly. Remove an existing version of `postgres` and delete all files:
+
+::: windows
+
+You will use the `Windows uninstaller` to remove `PostgreSQL`.
+
+1. Go to `Start` then `Control Panel` and then `Add or Remove Progams`
+2. Locate and selecte `PostgreSQL` from yoiur program list.
+3. Click `Remove`.
+
+Uninstall the data files manually. 
+
+The default directory for PostgreSQL data files is `C:\Program Files\PostgreSQL\Version#\Data`. Manually delete this directory to remove the files.
+
+
+:::
+
+::: mac
+**MAC O/S 10.14 MOJAVE**
+
+```bash
+brew uninstall --force postgresql      
+rm -rf /usr/local/var/postgres
+```
+:::
+
+::: ubuntu
+**UBUNTU 18.04**
+
+```bash
+rm -rf /usr/local/pgsql
+````
+
+:::
+
+You may now [install PostgreSQL normally](#install-postgresql-locally).
+
+
+
+
+### Install Strapi with PostgreSQL
+
+
+### Install with Heroku Postgres
