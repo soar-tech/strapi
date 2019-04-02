@@ -230,7 +230,7 @@ Please navigate to the section that corresponds to the database and/or external 
 
 ### MongoDB Atlas 
 
-In this section you will be configuring Heroku with a [free MongoDB Atlas account](https://www.mongodb.com/cloud/atlas). Prior to this section, you should have [created a local Strapi project using MongoDB](http://localhost:8080/documentation/3.x.x/guides/database.html#install-strapi-with-mongodb) and then [uploaded it to Heroku](/3.x.x/guides/deployment.html#commit-and-push-strapi-to-heroku). 
+In this section you will be configuring Heroku with a [free MongoDB Atlas account](https://www.mongodb.com/cloud/atlas). Prior to this section, you should have [created a local Strapi project using MongoDB](/3.x.x/guides/database.html#install-strapi-with-mongodb) and then [uploaded it to Heroku](/3.x.x/guides/deployment.html#commit-and-push-strapi-to-heroku). 
 
 You should have already [created and configured a MongoDB Atlas Cluster](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas).
 
@@ -271,17 +271,17 @@ It is recommended to develop with SQLite and deploy to a PostreSQL deployment.
 
 #### Heroku Postgres
 
-Prior to beginning this section, you should have completed the steps and actions for [creating a Heroku account and a Heroku app](#heroku-account-and-app-project-set-up), you should have [created a Quick Start local installation of Strapi](/documentation/3.x.x/getting-started/quick-start.html) and then [Git Init and Pushed it to Heroku](#commit-and-push-strapi-to-heroku). The next step is to install and configure [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql).
+Prior to beginning this section, you should have completed the steps and actions for [creating a Heroku account and a Heroku app](#heroku-account-and-app-project-set-up), you should have [created a Quick Start local installation of Strapi](/3.x.x/getting-started/quick-start.html) and then [Git Init and Pushed it to Heroku](#commit-and-push-strapi-to-heroku). The next step is to install and configure [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql).
 
 Here are the basic steps to deploy an Strapi app to Heroku using PostgreSQL:
 
 1. Log in to Heroku and create a new app.  (This should be already done following [these instructions](#heroku-account-and-app-project-set-up)). 
-2. Create a local development Strapi Project.  The [Quick Start guide](/documentation/3.x.x/getting-started/quick-start.html) shows exactly how to accomplish this. From your `Projects` folder:
+2. Create a local development Strapi Project.  The [Quick Start guide](/3.x.x/getting-started/quick-start.html) shows exactly how to accomplish this. From your `Projects` folder:
 
 ```bash
 strapi new cms-strapi-postgres --quickstart
 ```
-3. Commit and push Strapi to Heroku ([You must be logged in to Heroku](/documentation/3.x.x/guides/deployment.html#set-up-your-local-development-environment)):
+3. Commit and push Strapi to Heroku ([You must be logged in to Heroku](/3.x.x/guides/deployment.html#set-up-your-local-development-environment)):
 
 ```bash
 heroku login
@@ -357,11 +357,101 @@ You are now ready to configure your local Strapi project to connect to this Post
 
 :::
 
-6.  You next step is to configure your local Strapi project to connect to this PostgreSQL database. You will need to use your code editor to edit a file called `database.json` and then we will test the database connection through Strapi by running Strapi in Production mode locally.
+6.  You next step is to configure your local Strapi project to connect to this PostgreSQL database. You will need to use your code editor to edit a file called `database.json`, to edit a file called `hook.json` and then you will test the database connection through Strapi by running Strapi in Production mode locally.
 
-- 
+- Go ahead and open `database.json` for your `production variables`.  From within your project folder root, in this case, `cms-strapi-postgres`, the path: `/config/environments/production/database.json`.
 
+The config file is initial setup to be run with SQLite and the variables match the localhost settings:
 
+```bash
+{
+  "defaultConnection": "default",
+  "connections": {
+    "default": {
+      "connector": "strapi-hook-bookshelf",
+      "settings": {
+        "client": "sqlite",
+        "host": "${process.env.DATABASE_HOST || '127.0.0.1'}",
+        "port": "${process.env.DATABASE_PORT || 27017}",
+        "database": "${process.env.DATABASE_NAME || 'strapi'}",
+        "username": "${process.env.DATABASE_USERNAME || ''}",
+        "password": "${process.env.DATABASE_PASSWORD || ''}"
+      },
+      "options": {}
+    }
+  }
+}
+``` 
+
+Next you will need to copy your actual production config vars to this file. Using the URL [above example](#manually-parsing-the-heroku-postgres-database-url) and changing the `"client":` to `"postgres"`:
+
+```bash
+{
+  "defaultConnection": "default",
+  "connections": {
+    "default": {
+      "connector": "strapi-hook-bookshelf",
+      "settings": {
+        "client": "postgres",
+        "host": "${process.env.DATABASE_HOST || 'ec2-50-37-231-192.compute-2.amazonaws.com'}",
+        "port": "${process.env.DATABASE_PORT || 5432}",
+        "database": "${process.env.DATABASE_NAME || 'd516fp1u21ph7b'}",
+        "username": "${process.env.DATABASE_USERNAME || 'ebitxebvixeeqd'}",
+        "password": "${process.env.DATABASE_PASSWORD || 'dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf'}"
+      },
+      "options": {}
+    }
+  }
+}
+``` 
+
+After you have edited and saved the `database.json` file. You will need to edit the `"timeout":` setting in a file called `hook.json`. From within your project folder root, in this case, `cms-strapi-postgres`, the path: `/config/hook.json`.
+
+The initial settings in this file look like this:
+
+```bash
+{
+  "timeout": 3000,
+  "load": {
+    "before": [],
+    "order": [
+      "Define the hooks' load order by putting their names in this array in the right order"
+    ],
+    "after": []
+  }
+}
+```
+You are going to change the `"timeout":` setting from `3000` to `40000`.  The reason you are increasing the timeout on this function is because Heroku will put your server in a `sleep-mode`, if you are on the **Free Plan**, whenever there has not been traffic for 30 minutes. Therefore to avoid errors, we have to increase this setting to allow a longer connection speed. Change the setting like this:
+
+```bash
+{
+  "timeout": 40000,
+  "load": {
+    "before": [],
+    "order": [
+      "Define the hooks' load order by putting their names in this array in the right order"
+    ],
+    "after": []
+  }
+}
+
+```
+Lastly, we need to install a package called [pg](https://www.npmjs.com/package/pg). Heroku needs this dependency for Heroku Postgress to work with Strapi.  From your Project root:
+
+```bash
+npm install pg --save
+```
+
+7. Commit and push changes to Heroku. You have made some changes to some keys files that will connect Strapi to the PostgreSQL database. It is time to commit and push those changes to Heroku. Do these steps for your project.  Please make sure to use your Heroku project name. Make sure to be in your project root folder for these commands:
+
+```bash
+cd cms-strapi-postgres 
+git add .
+git commit -am "Updated database.json file to add database config vars. Updated hooks.json to increase timeout. Added NPM package pg."
+git push heroku master
+```
+
+After Heroku has finished installing and updating all the packages for your Heroku app, you will see your app working.
 
 
 ## AWS

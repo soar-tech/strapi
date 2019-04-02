@@ -516,7 +516,7 @@ david=# \q
 ```
 
 
-You can now [test and troubleshoot postgres](#test-and-troubleshoot-your-postgresql-installation) on your local installation [here](http://localhost:8080/documentation/3.x.x/guides/database.html#test-and-troubleshoot-your-postgresql-installation).  
+You can now [test and troubleshoot postgres](#test-and-troubleshoot-your-postgresql-installation) on your local installation [here](/3.x.x/guides/database.html#test-and-troubleshoot-your-postgresql-installation).  
 
  **Note:** On Ubuntu installations you can exit out of `psql` by using the `:` + `q` keys. 
  Additionally, `su your-username` returns you from the `postgres` environment to the normal Ubuntu command line environment.
