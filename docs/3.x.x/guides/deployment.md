@@ -263,6 +263,107 @@ If you see the Strapi **Welcome.** page for your app, you have correctly set-up,
 You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
 
 
+### PostgreSQL
+
+In this section two different installations methods are available for developing and deploying with PostgreSQL on Heroku. The first is developing with SQLite but having a PostgreSQL deployment. The second method is developing with PostgreSQL installed and being used on your development environment.
+
+It is recommended to develop with SQLite and deploy to a PostreSQL deployment. 
+
+#### Heroku Postgres
+
+Prior to beginning this section, you should have completed the steps and actions for [creating a Heroku account and a Heroku app](#heroku-account-and-app-project-set-up), you should have [created a Quick Start local installation of Strapi](/documentation/3.x.x/getting-started/quick-start.html) and then [Git Init and Pushed it to Heroku](#commit-and-push-strapi-to-heroku). The next step is to install and configure [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql).
+
+Here are the basic steps to deploy an Strapi app to Heroku using PostgreSQL:
+
+1. Log in to Heroku and create a new app.  (This should be already done following [these instructions](#heroku-account-and-app-project-set-up)). 
+2. Create a local development Strapi Project.  The [Quick Start guide](/documentation/3.x.x/getting-started/quick-start.html) shows exactly how to accomplish this. From your `Projects` folder:
+
+```bash
+strapi new cms-strapi-postgres --quickstart
+```
+3. Commit and push Strapi to Heroku ([You must be logged in to Heroku](/documentation/3.x.x/guides/deployment.html#set-up-your-local-development-environment)):
+
+```bash
+heroku login
+cd cms-strapi-postgres
+git init
+git add .
+git commit -am "Initial Commit" 
+```
+
+Next, you will need to [initialize the Heroku Git repository](#commit-and-push-strapi-to-heroku).  You will need your app name. You app `Deploy page` has the exact commands you need to deploy. The you will be able to `push` your project to Heroku:
+
+```bash
+heroku git:remote -a cms-strapi-postgres     // ADD YOUR OWN APP NAME
+git push heroku master
+```
+
+4. Next we need to install a Heroku plug for using Postgres. From your Heroku Dashboard, add the `Heroku Postgres Add-On` to your project through the following steps:
+  - From your Heroku App `Overview` dashboard, click the `Configure Add-ons ->` link.
+  - Under `Add-ons`, search for and click on `Heroku Postgres`.  There will be a pop-up, from the ensure that it says, **"Heroku Postgres --> cms-strap-postgress"**  (This should be YOUR app name in Heroku.) At the same time, choose a `Plan name`, in this case; `Hobby Dev - Free` and then click the `Provision` button.
+
+5. The next steps are to test the database connection using the appropriate tool for your operating system. Before you can test the database connection, you will need to note down the `config vars`. From within your `Heroku Dashboard`:
+ - Click to the `Settings Page`
+ - In the `Config Vars` section, click on `Reveal Config Vars`.
+ - Note down the `Config Vars`. Next to `DATABASE URL`, you should see a link that starts with, `postgres://`, copy this. 
+   
+Below you will find instructions on using the appropriate tool for your operating system to test your database connection using the link you noted above.
+
+#### Manually Parsing the Heroku Postgres DATABASE_URL
+
+In order to  config Strapi and to test your database connection, you will need to parse the `DATABASE_URL` value given to you in the `Config Vars`. The URL contains five different variables.  They are:
+  - **User**
+  - **Password**
+  - **Host**
+  - **Port**
+  - **Database**
+
+  Take this URL as an example:
+
+```
+  postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf@ec2-50-37-231-192.compute-2.amazonaws.com:5432/d516fp1u21ph7b
+```
+  - **User**: ebitxebvixeeqd
+  - **Password**: dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf
+  - **Host**: ec2-50-37-231-192.compute-2.amazonaws.com
+  - **Port**: 5432
+  - **Database**: d516fp1u21ph7b
+
+Below you can use this example to help you to parse your URL if your tool fails to parse your URL for you automatically. 
+
+::: windows
+**WINDOWS 10**
+::: 
+
+::: mac
+**MAC O/S 10.14 MOJAVE**
+
+The PostgreSQL database connection can be tested using a tool called [Postico](https://eggerapps.at/postico/). Installation and basic usage documentation can be found [here](https://eggerapps.at/postico/docs/v1.5.6/). After installation it do the following steps:
+
+- From your Heroku `Config Vars`, copy to your clipboard the `postgres://` link next to `DATABASE_URL`.
+- Open **Postico**
+- Click on `New Favorite`
+- If you have the database URL in your copy clipboard, **Postico** should automatically parse the different parts for you.
+- However, if it didn't you can follow the [instructions here to parse the URL manually](#manually-parsing-the-heroku-postgres-database-url).
+- Click connect. You may get a warning. You can safely ignore this and click `continue`.
+- If you got a `Database Schema`, then you have successfully tested and connected to your database. 
+
+You are now ready to configure your local Strapi project to connect to this PostgreSQL database.
+
+:::
+
+::: ubuntu
+**UBUNTU 18.04**
+
+:::
+
+6.  You next step is to configure your local Strapi project to connect to this PostgreSQL database. You will need to use your code editor to edit a file called `database.json` and then we will test the database connection through Strapi by running Strapi in Production mode locally.
+
+- 
+
+
+
+
 ## AWS
 
 Coming soon.
