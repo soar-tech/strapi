@@ -428,7 +428,11 @@ For the purposes of these docs, we will review the installation steps for Postgr
 
 ### Install PostgreSQL on Windows 10
 
+PostgreSQL for Windows is installed with a downloadable executable. When you download and install this package, you also install a GUI called [pgAdmin 4](https://www.pgadmin.org/).  It provides a GUI for administering your PostgreSQL database. Below you will find instructions for accomplishing your tasks from the command line in Windows. If you prefer using the GUI, you may find additional instructions [here](https://www.pgadmin.org/docs/pgadmin4/4.x/).
 
+Follow these steps to install PostgreSQL onto your Windows 10 developer environment:
+
+1. 
 
 ::: 
 

@@ -298,7 +298,7 @@ heroku git:remote -a cms-strapi-postgres     // ADD YOUR OWN APP NAME
 git push heroku master
 ```
 
-4. Next we need to install a Heroku plug for using Postgres. From your Heroku Dashboard, add the `Heroku Postgres Add-On` to your project through the following steps:
+4. Next we need to install a Heroku plugin for using Postgres. From your Heroku Dashboard, add the `Heroku Postgres Add-On` to your project through the following steps:
   - From your Heroku App `Overview` dashboard, click the `Configure Add-ons ->` link.
   - Under `Add-ons`, search for and click on `Heroku Postgres`.  There will be a pop-up, from the ensure that it says, **"Heroku Postgres --> cms-strap-postgress"**  (This should be YOUR app name in Heroku.) At the same time, choose a `Plan name`, in this case; `Hobby Dev - Free` and then click the `Provision` button.
 
@@ -329,7 +329,7 @@ In order to  config Strapi and to test your database connection, you will need t
   - **Port**: 5432
   - **Database**: d516fp1u21ph7b
 
-Below you can use this example to help you to parse your URL if your tool fails to parse your URL for you automatically. 
+Below you can use the above example to help you to parse your URL if your tool fails to parse your URL for you automatically. 
 
 ::: windows
 **WINDOWS 10**
