@@ -3,11 +3,12 @@
 Strapi gives you options in which database you can use. Strapi currently supports the `PostgreSQL`, `MongoDB`, `SQLite`, `MySQL` and 
 `MariaDB` databases. The following documentation covers how to install these databases locally (for development purposes) and on various hosted or cloud server solutions (for staging or production purposes).
 
+(Deploying **Strapi** is covered in the [Deployment Guide](/3.x.x/guides/deployment.html).)
 
 **Table of contents:**
 
 1. [SQLite Installation](#sqlite-installation)
-    - [Install SQLite locally](#-install-sqlite-locally)
+    - [Install SQLite locally](#install-sqlite-locally)
 
 2. [MongoDB Installation](#mongodb-installation)
     - [Install MongoDB locally](#install-mongodb-locally)
@@ -20,39 +21,37 @@ Strapi gives you options in which database you can use. Strapi currently support
 
 ## SQLite Installation
 
-SQLite is the default [Quick Start](/3.x.x/getting-started/quick-start.html) database and recommended for developing your Strapi application locally. 
+SQLite is the default [Quick Start](/3.x.x/getting-started/quick-start.html) database and recommended to quickly deploy an app locally.
 
 ### Install SQLite locally
 
-Installing `SQLite` is done simply with the `strapi new cms --quickstart` command. 
+Simply use the `strapi new my-project --quickstart` command.
 
 ```bash
-strapi new cms --quickstart
+strapi new my-project --quickstart
 ```
 
-This will create a new project and launch your project in the browser. Please complete the [Quick Start Guide](/3.x.x/getting-started/quick-start.html), for a complete step-by-step tutorial. 
+This will create a new project and launch your project in the browser. (The [Quick Start Guide](/3.x.x/getting-started/quick-start.html) is a complete step-by-step tutorial.)
 
 ## MongoDB Installation
 
 ### Install MongoDB locally
 
-These detailed step-by-step instructions are for connecting and using a [community version MongoDB database](https://www.mongodb.com/) with Strapi. 
+In order to use Strapi with [MongoDB](https://www.mongodb.com/) in production, you must have and use MongoDB on your local development environment. These instructions show how to install a Strapi project locally with a MongoDB database.
 
-Unlike other databases, if you would like to use MongoDB in production with Strapi, you must also use a MongoDB installation in your development environment. 
-
-(If you do not already have Strapi installed globally on your development environment, please follow the instructions under step **#1** of the [Strapi tutorial](/3.x.x/getting-started/quick-start-tutorial.html#_1-install-strapi-globally). You only need to complete this step and then you return to complete these instructions for installing and using Strapi with MongoDB.)
-
-Let's go ahead now and install MongoDB and then create a new local **Strapi project**. 
+  - You must have [Strapi installed globally](/3.x.x/getting-started/quick-start-tutorial.html#_1-install-strapi-globally).
 
 ### Install MongoDB on your development environment
 
-::: warning Note
+  ::: warning Note
 
-If you already have MongoDB locally installed and running on your local development environment, you may simply skip to the [Install Strapi with MongoDB](#install-strapi-with-mongodb) section.
+  If you already have MongoDB locally installed and running on your local development environment, you may simply skip to the [Install Strapi locally with MongoDB](#install-strapi-locally-with-mongodb) section.
 
-:::
+  :::
 
-For the purposes of these docs, we will review the installation steps for MongoDB on a Windows 10, Mac O/S (Mojave) and Linux Ubuntu 18.04. (You may always check the official [MongoDB documentation](https://docs.mongodb.com/manual/installation/#tutorial-installation), should you have a different O/S or if you have any additional questions.)
+  (You may always check the official [MongoDB documentation](https://docs.mongodb.com/manual/installation/#tutorial-installation), should you have any additional installation questions.)
+
+  Please complete the installation steps appropriate to your operating system.
 
 ::: windows
 **WINDOWS 10**
@@ -61,14 +60,13 @@ For the purposes of these docs, we will review the installation steps for MongoD
 
 Follow these steps to [install MongoDB onto your Windows 10](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) environment (The Windows Sub-System for Linux (WSL) is unsupported by MongoDB):
 
-1. Download the `MongoDB Community Edition` for Windows [here](https://www.mongodb.com/download-center/community?jmp=docs). You will need to ensure the following is showing on the download page:
+1. Download the `MongoDB Community Edition` for Windows [here](https://www.mongodb.com/download-center/community?jmp=docs). You need to ensure the following is showing on the download page:
     - Select the server you would like to run : `MongoDB Community Server`
     - Version : `4.x.x` 
     - OS : `Windows 64-bit x64`
     - Package : `MSI`
 
     Now you can click the `Download` button.
-
 
 2. Run the MongoDB installer by _double-clicking_ the (.msi) file you downloaded, then complete each step of the MongoDB Community Edition installation wizard:
     - Click `Next` from the _Welcome Screen_
@@ -81,11 +79,11 @@ Follow these steps to [install MongoDB onto your Windows 10](https://docs.mongod
         - Continue with the default installation of the `Data` and `Log` directories.
         - Click `Next`
 
-4. You may choose _NOT_ to install _MongoDB Compass_, by unchecking `Install MongoDB Compass`, otherwise click `Next`.
+3. You may choose _NOT_ to install _MongoDB Compass_, by unchecking `Install MongoDB Compass`, otherwise click `Next`.
 
-5. Click `Install`, and let MongoDB finish installing. When it is complete, click `Finish`.
+4. Click `Install`, and let MongoDB finish installing. When it is complete, click `Finish`.
 
-6. Let's start the `mongod` background service.  Open a new command line window and navigate to the following directory and then execute the `mongod` command:
+5. Start the `mongod` background service.  Open a new command line window and navigate to the following directory and then execute the `mongod` command:
 
 ```bash
 C:\>
@@ -93,7 +91,7 @@ C:\> cd Program Files\MongoDB\Server\4.0\bin
 C:\Program Files\MongoDB\Server\4.0\bin>mongod
 ```
 
-7. Open up another new command line window so that you can access the `mongo shell`. In the new command line window, navigate to the following directory and then execute the `mongo` command:  
+6. Open up another new command line window in order to access the `mongo shell`. In the new command line window, navigate to the following directory and then execute the `mongo` command:  
 
 ```bash
 C:\>
@@ -103,7 +101,7 @@ C:\Program Files\MongoDB\Server\4.0\bin>mongo
 
 You are now in the mongo shell.  You can exit the shell by typing `CTRL + C` from the shell command line.
 
-You have now installed MongoDB onto your _Windows 10_ development environment. You are now ready to set-up and [configure Strapi to use MongoDB locally](#install-strapi-with-mongodb).
+You have now installed MongoDB onto your _Windows 10_ development environment. You are now ready to [install Strapi with MongoDB locally](#install-strapi-with-mongodb).
 
 :::
 
@@ -114,19 +112,19 @@ You have now installed MongoDB onto your _Windows 10_ development environment. Y
 
 Follow these steps to [install MongoDB onto your Mac](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) developer environment:
 
-1. From your terminal, use `brew` to tap the official MongoDB formula repository and add it to the formula list:
+1. Use `brew` to tap the official MongoDB formula repository and add it to the formula list:
 
 ```bash
 brew tap mongodb/brew
 ```
 
-2. From your terminal, now install MongoDB
+2. Now install MongoDB
 
 ```bash
 brew install mongodb-community@4.0
 ```
 
-3. In order to connect and use MongoDB, we first need to get the `mongod` process running and then we can open the `mongo` shell. In your terminal:
+3. In order to connect and use MongoDB, you first need to get the `mongod` process running and then we can open the `mongo` shell:
 
 ```bash
 mongod --config /usr/local/etc/mongod.conf
@@ -134,7 +132,7 @@ mongo
 ```
 You are now in the mongo shell.  You can exit the shell by typing `CTRL + C` from the shell command line.
 
-You have now installed MongoDB onto your _Mac_ development environment. You are now ready to set-up and [configure Strapi to use MongoDB locally](#install-strapi-with-mongodb).
+You have now installed MongoDB onto your _Mac_ development environment. You are now ready to [install Strapi with MongoDB locally](#install-strapi-with-mongodb).
 
 
 :::
@@ -146,7 +144,7 @@ You have now installed MongoDB onto your _Mac_ development environment. You are 
 
 Follow these steps to [install MongoDB onto your Ubuntu](https://docs.mongodb.com/manual/administration/install-on-linux/) environment:
 
-1. From your terminal, you will need to import a public key to ensure your MongoDB is authentic (You can verify the GPG key [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/).): 
+1. You need to import a public key to ensure your MongoDB is authentic (You can verify the GPG key [here](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/).):
 
 ```bash
 
@@ -160,7 +158,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD7
 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
 ```
 
-3. Reload the local package database from your terminal:
+3. Reload the local package database:
 
 ```bash
 sudo apt-get update
@@ -172,7 +170,7 @@ sudo apt-get update
 sudo apt-get install -y mongodb-org
 ```
 
-5. In order to connect and use MongoDB, we first need to get the mongod process running and then we can open the `mongo` shell. In your terminal:
+5. In order to connect and use MongoDB, you first need to get the `mongod` process running and then open the `mongo` shell:
 
 ```bash
 sudo service mongod start
@@ -181,31 +179,25 @@ mongo
 ```
 You are now in the mongo shell.  You can exit the shell by typing `CTRL + C` from the shell command line.
 
-You have now installed MongoDB onto your _Linux_ development environment. You are now ready to set-up and [configure Strapi to use MongoDB locally](#install-strapi-with-mongodb).
-
+You have now installed MongoDB onto your _Linux_ development environment. You are now ready to [install Strapi with MongoDB locally](#install-strapi-with-mongodb).
 
 :::
 
-### Install Strapi with MongoDB
+### Install Strapi locally with MongoDB
 
-### Create a new project
+Follow these steps to create a Strapi project locally using the MongoDB database. 
 
-We will use `strapi new cms` in the command line to create a project. The command will automatically create a Strapi `cms` project folder within your parent `Projects/` directory. You can replace the `cms` project name with any name you want.
+**Note:** MongoDB must already be running in the background.
 
-```bash
-strapi new cms
-```
+1. Create a new Strapi project
 
-You will see something like this:
+  `Path: ./`
 
 ```bash
-🚀 Start creating your Strapi application. It might take a minute, please take a coffee ☕️
-
-? Choose your installation type (Use arrow keys)
-❯ Quickstart (recommended) 
-  Custom (manual settings) 
+strapi new my-project
 ```
-Use your `down arrow` key and select `Custom (manual settings)` and press `enter`:
+
+- Use your `down arrow` key and select `Custom (manual settings)` and press `enter`:
 
 ```bash
 ? Choose your installation type 
@@ -213,7 +205,7 @@ Use your `down arrow` key and select `Custom (manual settings)` and press `enter
 ❯ Custom (manual settings) 
 ```
 
-Select `MongoDB` and press `enter`:
+- Select `MongoDB` and press `enter`:
 
 ```bash
 ? Choose your installation type Custom (manual settings)
@@ -224,24 +216,13 @@ Select `MongoDB` and press `enter`:
   Postgres 
 ``` 
 
-Next, you will be asked to create a new `Database name`. **Note:** MongoDB must already be running in the background.
-
-If you leave this field empty, Strapi will use the name of the folder, in this case `cms`. If you have an existing MongoDB database already created, enter it here or enter a different name as you choose.  We will accept the `cms` name by pressing `enter`. 
-
-```bash
-? Choose your installation type Custom (manual settings)
-? Choose your main database: MongoDB
-? Database name: (cms) 
-
-```
-
-Select the remaining default options for installing Strapi with MongoDB - just press `enter`.  It will look something like this including the installation:
+- Press `enter` to select the remaining default options. It will look something like this:
 
 ```bash
 
 ? Choose your installation type Custom (manual settings)
 ? Choose your main database: MongoDB
-? Database name: cms
+? Database name: my-project
 ? Host: 127.0.0.1
 ? +srv connection: false
 ? Port (It will be ignored if you enable +srv): 27017
@@ -263,10 +244,10 @@ The app has been connected to the database successfully!
 ✔ Install plugin upload.
 ✔ Link strapi dependency to the project.
 
-👌 Your new application cms is ready at /Users/david/Desktop/Projects/mongodb-tutorial/cms.
+👌 Your new application my-project is ready at /Users/david/Desktop/Projects/my-project.
 
 ⚡️ Change directory:
-$ cd cms
+$ cd my-project
 
 ⚡️ Start application:
 $ strapi start
@@ -278,6 +259,8 @@ You have successfully installed Strapi with Mongo on your local development envi
 ---
 
 ### Install on Atlas: MongoDB Atlas
+
+Follow these steps to create a Strapi project locally using the MongoDB database.
 
 We will create a database that we can use in production and access from an external hosting solution. Which means you will have a development database on your local computer and your live database on MongoDB Atlas.
 
@@ -294,7 +277,7 @@ We will set-up a database on a MongoDB Atlas free 512 MB account, which will be 
 2. After your **Cluster** has been created, go ahead and click on the `Security` tab (next to `Overview`):
     - Click the green `+ ADD NEW USER` button: 
         - Enter a `username` : eg. `paulbocuse` 
-        - Enter a `password` : eg. `mySecretPassword` 
+        - Enter a `password` : eg. `mySecretPassword`
         - Under `User Privileges` ensure **`Read and write to any database`** is selected. Then click `Add User` to save.
 
   **NOTE:** This `username` and `password` is needed later when we connect from your external hosting server to MongoDB Atlas.

@@ -37,6 +37,7 @@ module.exports = {
     ['meta', { name: 'msapplication-TileImage', content: '/rocket.png' }],
     ['meta', { name: 'msapplication-TileColor', content: color }],
   ],
+  
   markdown: {
     anchor: {
       permalink: true,
@@ -48,6 +49,8 @@ module.exports = {
         .use(...createContainer('ubuntu'))
         .use(...createContainer('mac'))
         .use(...createContainer('note'));
+      const vuepressTabs = require('vuepress-tabs')
+      vuepressTabs(md)
     },
   },
   title,
@@ -188,6 +191,7 @@ module.exports = {
         '/1.x.x/users.md',
       ],
     },
+
   },
 };
 
