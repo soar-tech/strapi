@@ -361,8 +361,9 @@ Commit your changes.
   `Path: ./my-project/`
 
   ```bash
+  git init
   git add .
-  git commit -am "Added environment options to production/database.json"
+  git commit -am "Initial Commit and added environment options to production/database.json"
   ```
 
   You are now ready to deploy your Strapi project to an external hosting provider and use MongoDB Atlas as your database server.  

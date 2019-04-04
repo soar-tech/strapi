@@ -313,8 +313,29 @@ Follow these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
 
 Using Strapi and MongoDB requires different set-up and different configuration steps. You cannot use `--quickstart` to develop a `MongoDB` Strapi project. Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
 
-1. You must have a [Strapi installation with MongoDB set-up locally](http://localhost:8080/documentation/3.x.x/guides/database.html#install-mongodb-locally).
+1. You must have a [Strapi installation with MongoDB set-up locally](/3.x.x/guides/database.html#install-mongodb-locally).
 2. You must have completed the [steps to use Strapi with MongoDB Atlas in production](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas).
+
+### Create a Heroku project.
+
+Create a new Heroku project.
+
+  `Path: ./my-project/`
+
+  ```bash
+  heroku create
+  ```
+  (You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL.  Otherwise, Heroku will automatically generating a random project name (and URL) for you.)
+
+::: warning NOTE
+If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
+
+`Path: ./my-project/`
+
+```bash
+heroku git:remote -a your-heroku-app-name
+```
+:::
 
 Now, [log into Heroku](https://id.heroku.com/login). You should see your app listed in the dashboard. Go ahead and click on it. Next, you will configure Heroku to access the MongoDB Atlas database you have already created.
 
