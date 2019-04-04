@@ -76,7 +76,6 @@ module.exports = {
             '/3.x.x/getting-started/install-requirements',
             '/3.x.x/getting-started/quick-start',
             '/3.x.x/getting-started/quick-start-tutorial',
-            '/3.x.x/getting-started/quick-start-heroku-postgresql',
           ],
         },
         {
