@@ -207,6 +207,7 @@ Below you will find database options when working with Heroku.  Please choose th
 :::: tabs cache-lifetime="10" :options="{ useUrlFragment: false }"
 
 ::: tab "PostgreSQL" id="heroku-postgresql"
+
 #### Heroku Postgres
 
 Follow these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
@@ -275,19 +276,19 @@ Follow these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
 
   Change the `"timeout":` setting from `3000` to `40000`.  This allows Strapi to bootup in the event Heroku puts the app in sleep mode. 
 
-```json
-{
-  "timeout": 40000,
-  "load": {
-    "before": [],
-    "order": [
-      "Define the hooks' load order by putting their names in this array in the right order"
-    ],
-    "after": []
+  ```json
+  {
+    "timeout": 40000,
+    "load": {
+      "before": [],
+      "order": [
+        "Define the hooks' load order by putting their names in this array in the right order"
+      ],
+      "after": []
+    }
   }
-}
 
-```
+  ```
 
 7. Install a package called [pg](https://www.npmjs.com/package/pg). Heroku needs this dependency for Heroku Postgress to work with Strapi.  
   `Path: ./my-project/`
@@ -327,7 +328,7 @@ Create a new Heroku project.
   ```
   (You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL.  Otherwise, Heroku will automatically generating a random project name (and URL) for you.)
 
-::: warning NOTE
+  ::: warning NOTE
 If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
 
 `Path: ./my-project/`
@@ -337,13 +338,15 @@ heroku git:remote -a your-heroku-app-name
 ```
 :::
 
-Now, [log into Heroku](https://id.heroku.com/login). You should see your app listed in the dashboard. Go ahead and click on it. Next, you will configure Heroku to access the MongoDB Atlas database you have already created.
+Now, [log into Heroku](https://id.heroku.com/login). You should see your app listed in the dashboard.
 
-From within the Heroku app page, go ahead and complete these steps:
+Click on your app in order to configure Heroku to access your created MongoDB Atlas database.
+
+From within you Heroku app page, complete these steps:
 - Click on `Settings`, and next to `Config Vars`, click on the button that says, `Reveal Config Vars`.
-- You will need to add five values that correspond to your Strapi `package.json` file and your **MongoDB Atlas** account settings.  These five values are: `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE PORT`, and `DATABASE_HOST`.
+- You will need to add five values that correspond to your Strapi `package.json` file and your **MongoDB Atlas** account settings.  These five values are: `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE PORT`, and `DATABASE_HOST`. You need to add each of these values as a `key` and add their `value` which are the values from **MongoDB Atlas**.
 
-The five example values from [installing on Atlas: MongoDB Atlas](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas), are:
+For example, five example values are:
 
 |  KEY | VALUE  |  
 |---|---|
@@ -355,29 +358,26 @@ The five example values from [installing on Atlas: MongoDB Atlas](/3.x.x/guides/
 
 **Note:** Please replace these above values with the actual values of your accounts.
 
-
-3. You should now be able to see your app in the browser. 
-- Click back to `Overview`
-- Click the `Open app`
-
-If you see the Strapi **Welcome.** page for your app, you have correctly set-up, configured and deployed your Strapi project using MongoDB Atlas on Heroku. You will now need to set-up your `admin user` as the `MondoDB Atlas` database is brand-new (and empty).
-
-You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
-
 ::::
 
-3. Having completed the steps to [complete the Strapi project and database set-up](#complete-strapi-project-and-database-set-up), you can now open your app:
+3. Having completed the steps to [complete the Strapi project and database set-up](#complete-strapi-project-and-database-set-up), you can now `git push heroku master` and open your app:
 
   `Path: ./my-project/``
 
   ```BASH
 
+  git push heroku master
   heroku apps:open 
 
   ```
+If you see the Strapi **Welcome.** page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new (and empty).
+
+You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
+
+
 ### Heroku Development 
 
-You continue developing your application with Strapi and Heroku by making changes on your computer and then using Git to commit and push those changes. After Heroku applies your changes, you can open your app.
+You continue developing your application with Strapi and Heroku by making changes on your computer and then using Git to commit and push those changes. After Heroku applies your changes, you now once again open your app.
 
   `Path: ./my-project/``
 
@@ -390,115 +390,6 @@ You continue developing your application with Strapi and Heroku by making change
   heroku apps:open 
 
   ```
-
-
-#### ********** END 
-
-
-### Commit and push Strapi to Heroku
-
-
-
-1. Navigate to the `cms/` project root. Now add this local Git repository (the project files) to the existing Heroku app. For example, in this tutorial the project is named `demo-strapi-cms` in Heroku. You will need your Heroku app name for the next steps:
-
-```bash
-heroku git:remote -a demo-strapi-cms     // ADD YOUR OWN APP NAME
-```
-
-2. Now you need to upload the Strapi files to Heroku and you do this by git pushing the files to the server. Enter `git push heroku master` in the command line and you should see something like this:
-
-```bash
-git push heroku master
-
-Counting objects: 1926, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (1854/1854), done.
-Writing objects: 100% (1926/1926), 15.23 MiB | 4.93 MiB/s, done.
-Total 1926 (delta 199), reused 0 (delta 0)
-remote: Compressing source files... done.
-remote: Building source:
-...
-remote: -----> Compressing...
-remote:        Done: 86.4M
-remote: -----> Launching...
-remote:        Released v3
-remote:        https://demo-strapi-cms.herokuapp.com/ deployed to Heroku
-remote: 
-remote: Verifying deploy... done.
-To https://git.heroku.com/demo-strapi-cms.git
- * [new branch]      master -> master
-```
-
-You Strapi project is now uploaded to Heroku. You are now ready to configure Heroku to work with an external database hosting service. Please follow the instruction below to [configure heroku to work with database](#configuring-heroku-to-work-with-databases).
-
-
-### Configuring Heroku to work with Databases.
-
-
-3. Commit and push Strapi to Heroku ([You must be logged in to Heroku](/3.x.x/guides/deployment.html#set-up-your-local-development-environment)):
-
-```bash
-heroku login
-cd cms-strapi-postgres
-git init
-git add .
-git commit -am "Initial Commit" 
-```
-
-Next, you will need to [initialize the Heroku Git repository](#commit-and-push-strapi-to-heroku).  You will need your app name. You app `Deploy page` has the exact commands you need to deploy. The you will be able to `push` your project to Heroku:
-
-```bash
-heroku git:remote -a cms-strapi-postgres     // ADD YOUR OWN APP NAME
-git push heroku master
-```
-
-4. Next we need to install a Heroku plugin for using Postgres. From your Heroku Dashboard, add the `Heroku Postgres Add-On` to your project through the following steps:
-  - From your Heroku App `Overview` dashboard, click the `Configure Add-ons ->` link.
-  - Under `Add-ons`, search for and click on `Heroku Postgres`.  There will be a pop-up, from the ensure that it says, **"Heroku Postgres --> cms-strap-postgress"**  (This should be YOUR app name in Heroku.) At the same time, choose a `Plan name`, in this case; `Hobby Dev - Free` and then click the `Provision` button.
-
-
-
-6.  You next step is to configure your local Strapi project to connect to this PostgreSQL database. You will need to use your code editor to edit a file called `database.json`, to edit a file called `hook.json` and then you will test the database connection through Strapi by running Strapi in Production mode locally.
-
-- Go ahead and open `database.json` for your `production variables`.  From within your project folder root, in this case, `cms-strapi-postgres`, the path: `/config/environments/production/database.json`.
-
-
-
-Next you will need to copy your actual production config vars to this file. Using the URL [above example](#manually-parsing-the-heroku-postgres-database-url) and changing the `"client":` to `"postgres"`:
-
-```bash
-{
-  "defaultConnection": "default",
-  "connections": {
-    "default": {
-      "connector": "strapi-hook-bookshelf",
-      "settings": {
-        "client": "postgres",
-        "host": "${process.env.DATABASE_HOST || 'ec2-50-37-231-192.compute-2.amazonaws.com'}",
-        "port": "${process.env.DATABASE_PORT || 5432}",
-        "database": "${process.env.DATABASE_NAME || 'd516fp1u21ph7b'}",
-        "username": "${process.env.DATABASE_USERNAME || 'ebitxebvixeeqd'}",
-        "password": "${process.env.DATABASE_PASSWORD || 'dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf'}"
-      },
-      "options": {}
-    }
-  }
-}
-``` 
-
-
-
-7. Commit and push changes to Heroku. You have made some changes to some keys files that will connect Strapi to the PostgreSQL database. It is time to commit and push those changes to Heroku. Do these steps for your project.  Please make sure to use your Heroku project name. Make sure to be in your project root folder for these commands:
-
-```bash
-cd cms-strapi-postgres 
-git add .
-git commit -am "Updated database.json file to add database config vars. Updated hooks.json to increase timeout. Added NPM package pg."
-git push heroku master
-```
-
-After Heroku has finished installing and updating all the packages for your Heroku app, you will see your app working.
-
 
 ## AWS
 
