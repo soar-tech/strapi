@@ -333,7 +333,11 @@ The deployment may take a few minutes. At the end, logs will display the url of 
 heroku apps:open 
 ```
 
-### Updates
+If you see the Strapi **Welcome.** page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new (and empty).
+
+You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
+
+### Project updates
 
 You can continue developing your application with Strapi and Heroku by making changes on your computer and then using Git to commit and push those changes. After Heroku applies your changes, you can open your app.
 
