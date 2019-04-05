@@ -241,7 +241,7 @@ heroku config:set DATABASE_NAME=d516fp1u21ph7b
 
 ##### 4. Update your database config file
 
-Replace the content of `database.json` with the following:
+Replace the contents of `database.json` with the following:
 
 `Path: ./config/environments/production/database.json`.
 
