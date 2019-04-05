@@ -93,7 +93,7 @@ This is a step-by-step guide for deploying a Strapi project on [Heroku](https://
 - You must have [Git installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
 - You must have a [free Heroku account](https://signup.heroku.com/) before doing these steps.
 
-If you already have the Heroku CLI installed locally on your computer. Skip to [Login to Heroku](#login-to-heroku-from-your-cli).
+If you already have the Heroku CLI installed locally on your computer. Skip to [Login to Heroku](#_2-login-to-heroku-from-your-cli).
 
 ### 1. Heroku CLI Installation
 
@@ -189,7 +189,7 @@ heroku git:remote -a your-heroku-app-name
 
 Your local development environment is now set-up and configured to work with Heroku. You have a new Strapi and a new Heroku app ready to be configured to work with a database and with each other.
 
-### 6. Complete Strapi project and Database set-up
+### 6. Complete the Strapi project and Database set-up
 
 Below you will find database options when working with Heroku.  Please choose the correct database (e.g. MongoDB, PostgreSQL, etc.) and follow those instructions after completing the above set-up and configuration steps.
 
@@ -201,9 +201,9 @@ Below you will find database options when working with Heroku.  Please choose th
 
 Follow these steps to deploy your Strapi app to Heroku using **PostgreSQL**:
 
-##### 1. Install the [Heroku addon](https://elements.heroku.com/addons/heroku-postgresql) for using Postgres.
+##### 1. Install the [Heroku Postgres addon](https://elements.heroku.com/addons/heroku-postgresql) for using Postgres.
 
-To make things even more easier, Heroku provides a powerful addon system. In this section, we are going to use the Postgres addon, which provides a free "Hobby Dev" plan. If you plan to deploy your app in production, it is highly recommend to switch to a paid plan.
+To make things even easier, Heroku provides a powerful addon system. In this section, you are going to use the Heroku Postgres addon, which provides a free "Hobby Dev" plan. If you plan to deploy your app in production, it is highly recommended to switch to a paid plan.
 
 `Path: ./my-project/`
 
@@ -213,7 +213,7 @@ heroku addons:create heroku-postgresql:hobby-dev
 
 ##### 2. Retrieve database credentials
 
-The add-on automatically exposed the database credentials into a singe environment variable accessible from your app. To retrieve it, type:
+The add-on automatically exposes the database credentials into a single environment variable accessible by your app. To retrieve it, type:
 
 `Path: ./my-project/`
 
@@ -223,9 +223,11 @@ heroku config
 
 This should print something like this: `postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf@ec2-50-37-231-192.compute-2.amazonaws.com:5432/d516fp1u21ph7b`.
 
-##### 3. Setup environment variables
+(This url is read like so: *postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** : **DATABASE_NAME***)
 
-Strapi expects a variable for each database connection detail (host, username, etc.). So, from the url above, we have to set several environment variables in the Heroku config:
+##### 3. Set environment variables
+
+Strapi expects a variable for each database connection detail (host, username, etc.). So, from the url above, you have to set several environment variables in the Heroku config:
 
 ```bash
 heroku config:set DATABASE_USERNAME=ebitxebvixeeqd
@@ -235,7 +237,7 @@ heroku config:set DATABASE_PORT=5432
 heroku config:set DATABASE_NAME=d516fp1u21ph7b
 ```
 
-**Note:** Please replace these above values with the actual values of your accounts.
+**Note:** Please replace these above values with the your actual values.
 
 ##### 4. Update your database config file
 
@@ -266,7 +268,7 @@ Replace the content of `database.json` with the following:
 
 ##### 5. Install the `pg` node module
 
-If you creating your project using another database that PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
+Unless you originally installed Strapi with PostgreSQL, you need to install the [pg](https://www.npmjs.com/package/pg) node module.
 
 `Path: ./my-project/`
 ```bash
@@ -322,10 +324,10 @@ You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/
 `Path: ./my-project/`
 
 ```bash
-git push origin master
+git push heroku master
 ```
 
-The deployment may take a few minutes. At the end, logs will display the url of your project (eg. `https://mighty-taiga-80884.herokuapp.com`). You can also open your project using the command line:
+The deployment may take a few minutes. At the end, logs will display the url of your project (e.g. `https://mighty-taiga-80884.herokuapp.com`). You can also open your project using the command line:
 
 `Path: ./my-project/`
 
@@ -335,7 +337,7 @@ heroku apps:open
 
 If you see the Strapi **Welcome.** page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new (and empty).
 
-You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
+You can now continue with the [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
 
 ### Project updates
 
