@@ -290,32 +290,60 @@ git commit -am "Add postgresql database config"
 
 #### MongoDB Atlas
 
-Using Strapi and MongoDB requires different set-up and different configuration steps. You cannot use `--quickstart` to develop a `MongoDB` Strapi project. Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
+(Using Strapi and MongoDB requires different set-up and different configuration steps. You cannot use `--quickstart` to develop a `MongoDB` Strapi project.)
+
+Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
 
 1. You must have a [Strapi installation with MongoDB set-up locally](/3.x.x/guides/database.html#install-mongodb-locally).
 2. You must have completed the [steps to use Strapi with MongoDB Atlas in production](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas).
 
-The five example values from [installing on Atlas: MongoDB Atlas](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas), are:
+##### 1. Create a Heroku project
 
-|  KEY | VALUE  |  
-|---|---|
-| DATABASE_NAME | **strapi-heroku**  |   
-| DATABASE_USERNAME  | **paulbocuse**  |   
-| DATABASE_PASSWORD   | **mySecretPassword**  |   
-| DATABASE_PORT  |   |
-| DATABASE_HOST  | **strapi-heroku-shard-00-00-o777o.mongodb.net:27017,strapi-heroku-shard-00-01-o606o.mongodb.net:27017,strapi-heroku-shard-00-02-o606o.mongodb.net:27017/test?ssl=true&replicaSet=Strapi-Heroku-shard-0&authSource=admin&retryWrites=true**  |   
+  `Path: ./my-project/`
 
-**Note:** Please replace these above values with the actual values of your accounts.
+  ```bash
+  heroku create
+  ```
+  (You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL.  Otherwise, Heroku will automatically generating a random project name (and URL) for you.)
 
-3. You should now be able to see your app in the browser.
-- Click back to `Overview`
-- Click the `Open app`
 
-If you see the Strapi **Welcome.** page for your app, you have correctly set-up, configured and deployed your Strapi project using MongoDB Atlas on Heroku. You will now need to set-up your `admin user` as the `MondoDB Atlas` database is brand-new (and empty).
+  If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
 
-You can now continue [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
+  `Path: ./my-project/`
 
-:::
+  ```bash
+  heroku git:remote -a your-heroku-app-name
+  ```
+
+##### 2. Configure your Heroku project
+
+Now, [log into Heroku](https://id.heroku.com/login). 
+
+Click on and enter into your app dashboard page.
+
+Next, complete these steps:
+- In `Settings`, and click `Reveal Config Vars` next to `Config Vars`.
+- You will need to add five key/value pairs that correspond to your **MongoDB Atlas** database.  These five keys are: `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE PORT`, and `DATABASE_HOST`. 
+  - Add each of the key/value pairs to match your **MongoDB Atlas** database. <br>**Note:** You will leave `DATABASE_PORT` empty.
+
+===
+
+##### 2. Set environment variables
+
+Strapi expects a variable for each database connection detail (host, username, etc.). So, from the url above, you have to set several environment variables in the Heroku config:
+
+```bash
+heroku config:set DATABASE_USERNAME=ebitxebvixeeqd
+heroku config:set DATABASE_PASSWORD=dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf
+heroku config:set DATABASE_HOST=ec2-50-37-231-192.compute-2.amazonaws.com
+heroku config:set DATABASE_PORT=5432
+heroku config:set DATABASE_NAME=d516fp1u21ph7b
+```
+
+**Note:** Please replace these above values with the your actual values.
+
+
+
 
 ::::
 
