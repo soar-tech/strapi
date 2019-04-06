@@ -315,35 +315,20 @@ Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
   heroku git:remote -a your-heroku-app-name
   ```
 
-##### 2. Configure your Heroku project
-
-Now, [log into Heroku](https://id.heroku.com/login). 
-
-Click on and enter into your app dashboard page.
-
-Next, complete these steps:
-- In `Settings`, and click `Reveal Config Vars` next to `Config Vars`.
-- You will need to add five key/value pairs that correspond to your **MongoDB Atlas** database.  These five keys are: `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE PORT`, and `DATABASE_HOST`. 
-  - Add each of the key/value pairs to match your **MongoDB Atlas** database. <br>**Note:** You will leave `DATABASE_PORT` empty.
-
-===
-
 ##### 2. Set environment variables
 
-Strapi expects a variable for each database connection detail (host, username, etc.). So, from the url above, you have to set several environment variables in the Heroku config:
+When you [set-up your MongoDB Atlas database](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas) you created and noted the five key/value pairs that correspond to your **MongoDB Atlas** database. These five keys are: `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE PORT`, and `DATABASE_HOST`.
+  
+Strapi expects a variable for each database connection detail (host, username, etc.). So, from **MongoDB Atlas**, you have to set the environment variables in the Heroku config (for **DATABASE_HOST** you need to surround the URL with **""**, and set **DATABASE_PORT** to nothing):
 
 ```bash
-heroku config:set DATABASE_USERNAME=ebitxebvixeeqd
-heroku config:set DATABASE_PASSWORD=dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf
-heroku config:set DATABASE_HOST=ec2-50-37-231-192.compute-2.amazonaws.com
-heroku config:set DATABASE_PORT=5432
-heroku config:set DATABASE_NAME=d516fp1u21ph7b
+heroku config:set DATABASE_USERNAME=paulbocuse
+heroku config:set DATABASE_PASSWORD=mySecretPassword
+heroku config:set DATABASE_HOST="stapi-mongo-heroku-shard-00-00-fty6c.mongodb.net:27017,strapi-mongo-heroku-shard-00-01-fty6c.mongodb.net:27017,strapi-mongo-heroku-shard-00-02-fty6c.mongodb.net:27017/test?ssl=true&replicaSet=strapi-mongo-heroku-shard-0&authSource=admin&retryWrites=true"
+heroku config:set DATABASE_PORT=
+heroku config:set DATABASE_NAME=strapi-mongo-heroku
 ```
-
 **Note:** Please replace these above values with the your actual values.
-
-
-
 
 ::::
 
