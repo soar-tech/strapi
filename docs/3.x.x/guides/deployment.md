@@ -191,7 +191,7 @@ Your local development environment is now set-up and configured to work with Her
 
 ### 6. Complete the Strapi project and Database set-up
 
-Below you will find database options when working with Heroku.  Please choose the correct database (e.g. MongoDB, PostgreSQL, etc.) and follow those instructions after completing the above set-up and configuration steps.
+Below you will find database options when working with Heroku.  Please choose the correct database (e.g. MongoDB, PostgreSQL, etc.) and follow those instructions.
 
 :::: tabs cache-lifetime="10" :options="{ useUrlFragment: false }"
 
@@ -221,7 +221,7 @@ The add-on automatically exposes the database credentials into a single environm
 heroku config
 ```
 
-This should print something like this: `postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf@ec2-50-37-231-192.compute-2.amazonaws.com:5432/d516fp1u21ph7b`.
+This should print something like this: `DATABASE_URL: postgres://ebitxebvixeeqd:dc59b16dedb3a1eef84d4999a0be041bd419c474cd4a0973efc7c9339afb4baf@ec2-50-37-231-192.compute-2.amazonaws.com:5432/d516fp1u21ph7b`.
 
 (This url is read like so: *postgres:// **USERNAME** : **PASSWORD** @ **HOST** : **PORT** : **DATABASE_NAME***)
 
@@ -246,7 +246,7 @@ Replace the contents of `database.json` with the following:
 `Path: ./config/environments/production/database.json`.
 
 ```json
-  {
+{
   "defaultConnection": "default",
   "connections": {
     "default": {
@@ -280,7 +280,6 @@ npm install pg --save
 `Path: ./my-project/`
 
 ```bash
-git add .
 git commit -am "Add postgresql database config"
 ```
 
@@ -345,12 +344,14 @@ The deployment may take a few minutes. At the end, logs will display the url of 
 `Path: ./my-project/`
 
 ```bash
-heroku apps:open 
+heroku open
 ```
 
-If you see the Strapi **Welcome.** page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new (and empty).
+If you see the Strapi Welcome page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new (and empty).
 
 You can now continue with the [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
+
+---
 
 ### Project updates
 
@@ -362,7 +363,7 @@ You can continue developing your application with Strapi and Heroku by making ch
 git add .
 git commit -am "Changes to my-project noted"
 git push heroku master
-heroku apps:open 
+heroku open
 ```
 
 ## AWS
