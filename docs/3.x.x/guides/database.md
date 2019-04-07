@@ -217,7 +217,7 @@ $ strapi start
 
 ```
 
-You have successfully installed Strapi with Mongo on your local development environment. You are now ready to [create your first user](/3.x.x/getting-started/quick-start.html#_3-create-an-admin-user). 
+You have successfully installed Strapi with MongoDB on your local development environment. You are now ready to [create your first user](/3.x.x/getting-started/quick-start.html#_3-create-an-admin-user). 
 
 ---
 
@@ -233,7 +233,7 @@ Follow these steps to configure a local Strapi project to use a [MongoDB Atlas](
   - Then click `Build a Cluster`, from the options page:  
     - Choose **AWS** as your **Cloud Provider & Region**. 
     - Select a **Region**. (Note: some **Regions** do not have a _free tier_.)
-    - In **Cluster Tier**, select **Shared Sandbax**, _Tier_ `MO`.
+    - In **Cluster Tier**, select **Shared Sandbox**, _Tier_ `MO`.
     - In **Cluster Name**, name your cluster.
   - Click the green `Create Cluster` button. You will get a message that says, "*Your cluster is being created...*"
 
@@ -269,7 +269,7 @@ MongoDB Atlas automatically exposes the database credentials into a single envir
 
 Replace the contents of `database.json` with the following:
 
-`Path: ./config/environments/production/database.json`.
+`Path: ./config/environments/(development|production)/database.json`.
 
 ```json
 {
@@ -279,30 +279,18 @@ Replace the contents of `database.json` with the following:
       "connector": "strapi-hook-mongoose",
       "settings": {
         "client": "mongo",
-        "host": "${process.env.DATABASE_HOST || '127.0.0.1'}",
-        "port": "${process.env.DATABASE_PORT || 27017}",
-        "database": "${process.env.DATABASE_NAME || 'strapi'}",
-        "username": "${process.env.DATABASE_USERNAME || ''}",
-        "password": "${process.env.DATABASE_PASSWORD || ''}"
+        "host": "cluster0-shard-00-00-y8imj.mongodb.net:27017,cluster0-shard-00-01-y8imj.mongodb.net:27017,cluster0-shard-00-02-y8imj.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true",
+        "port": 27017,
+        "database": "test",
+        "username": "john",
+        "password": "doe"
       },
       "options": {
-        "authenticationDatabase": "admin",
         "ssl": true
       }
     }
   }
 }
-
 ```
 
-6. Git Init and commit your changes
-
-  `Path: ./my-project/`
-
-  ```bash
-  git init
-  git add .
-  git commit -am "Initial Commit and added values to database.json"
-  ```
-
-  You are now ready to deploy your Strapi project to an external hosting provider and use MongoDB Atlas as your database server.  
+You are now ready use Strapi locally or to deploy your project to an external hosting provider and use MongoDB Atlas as your database server. 

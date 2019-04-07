@@ -143,9 +143,7 @@ Follow the instructions and return to your command line.
 Create a [new Strapi project](/3.x.x/getting-started/quick-start.html) (if you want to deploy an existing project go to step 4).
 
 ::: warning NOTE
-
-If you will use a **MongoDB database** with your project, please skip directly [here](#heroku-mongodb). Otherwise, continue with these steps for **SQLite**, **PostgreSQL**, **MySQL**, and **MariaDB**.
-
+If you will use a **MongoDB database** with your project, [create a Strapi project with MongoDB set-up locally](/3.x.x/guides/database.html#install-mongodb-locally) and go to step 4.
 :::
 
 `Path: ./`
@@ -191,7 +189,7 @@ Your local development environment is now set-up and configured to work with Her
 
 ### 6. Complete the Strapi project and Database set-up
 
-Below you will find database options when working with Heroku.  Please choose the correct database (e.g. MongoDB, PostgreSQL, etc.) and follow those instructions.
+Below you will find database options when working with Heroku.  Please choose the correct database (e.g. PostgreSQL, MongoDB, etc.) and follow those instructions.
 
 :::: tabs cache-lifetime="10" :options="{ useUrlFragment: false }"
 
@@ -275,14 +273,6 @@ Unless you originally installed Strapi with PostgreSQL, you need to install the 
 npm install pg --save
 ```
 
-##### 6. Commit your changes
-
-`Path: ./my-project/`
-
-```bash
-git commit -am "Add postgresql database config"
-```
-
 :::
 
 ::: tab "MongoDB" id="heroku-mongodb"
@@ -293,28 +283,10 @@ git commit -am "Add postgresql database config"
 
 Please follow these steps the **deploy a Strapi app with MongoDB on Heroku**.
 
-1. You must have a [Strapi installation with MongoDB set-up locally](/3.x.x/guides/database.html#install-mongodb-locally).
-2. You must have completed the [steps to use Strapi with MongoDB Atlas in production](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas).
-
-##### 1. Create a Heroku project
-
-  `Path: ./my-project/`
-
-  ```bash
-  heroku create
-  ```
-  (You can use `heroku create custom-project-name`, to have Heroku create a `custom-project-name.heroku.com` URL.  Otherwise, Heroku will automatically generating a random project name (and URL) for you.)
+You must have completed the [steps to use Strapi with MongoDB Atlas in production](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas).
 
 
-  If you have a Heroku project app already created. You would use the following step to initialize your local project folder:
-
-  `Path: ./my-project/`
-
-  ```bash
-  heroku git:remote -a your-heroku-app-name
-  ```
-
-##### 2. Set environment variables
+##### 1. Set environment variables
 
 When you [set-up your MongoDB Atlas database](/3.x.x/guides/database.html#install-on-atlas-mongodb-atlas) you created and noted the five key/value pairs that correspond to your **MongoDB Atlas** database. These five keys are: `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE PORT`, and `DATABASE_HOST`.
   
@@ -329,7 +301,43 @@ heroku config:set DATABASE_NAME=strapi-mongo-heroku
 ```
 **Note:** Please replace these above values with the your actual values.
 
+##### 2. Update your database config file
+
+Replace the contents of `database.json` with the following:
+
+`Path: ./config/environments/production/database.json`.
+
+```json
+{
+  "defaultConnection": "default",
+  "connections": {
+    "default": {
+      "connector": "strapi-hook-mongoose",
+      "settings": {
+        "client": "mongo",
+        "host": "${process.env.DATABASE_HOST}",
+        "port": "${process.env.DATABASE_PORT}",
+        "database": "${process.env.DATABASE_NAME}",
+        "username": "${process.env.DATABASE_USERNAME}",
+        "password": "${process.env.DATABASE_PASSWORD}"
+      },
+      "options": {
+        "ssl": true
+      }
+    }
+  }
+}
+```
+
 ::::
+
+### 6. Commit your changes
+
+`Path: ./my-project/`
+
+```bash
+git commit -am "Update database config"
+```
 
 ### 7. Deploy
 
@@ -350,6 +358,10 @@ heroku open
 If you see the Strapi Welcome page, you have correctly set-up, configured and deployed your Strapi project on Heroku. You will now need to set-up your `admin user` as the production database is brand-new (and empty).
 
 You can now continue with the [Tutorial - Creating an Admin User](/3.x.x/getting-started/quick-start-tutorial.html#_3-create-an-admin-user), if you have any questions on how to proceed.
+
+::: warning NOTE
+For security reasons, the Content Type Builder plugin is disabled in production. To update content structure, please make your changes locally and deploy again.
+:::
 
 ---
 
