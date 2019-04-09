@@ -29,7 +29,7 @@ module.exports = {
     modelName = '',
     attributeName = '',
     rootType = 'query',
-    action = ''
+    action = '',
   }) {
     // Type
     if (definition.type) {
@@ -151,11 +151,11 @@ module.exports = {
    */
 
   addPolymorphicUnionType: (customDefs, defs) => {
+    const def = customDefs + defs;
     const types = graphql
-      .parse(customDefs + defs)
+      .parse(def)
       .definitions.filter(
-        def =>
-          def.kind === 'ObjectTypeDefinition' && def.name.value !== 'Query',
+        def => def.kind === 'ObjectTypeDefinition' && def.name.value !== 'Query'
       )
       .map(def => def.name.value);
 
@@ -212,7 +212,7 @@ module.exports = {
               modelName: globalId,
               attributeName: attribute,
               rootType: 'mutation',
-              action: 'update'
+              action: 'update',
             })}`;
           })
           .join('\n')}
