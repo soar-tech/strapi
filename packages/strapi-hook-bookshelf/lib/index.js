@@ -77,6 +77,7 @@ module.exports = function(strapi) {
             // Parse every authenticated model.
             _.forEach(models, (definition, model) => {
               definition.globalName = _.upperFirst(_.camelCase(definition.globalId));
+              definition.associations = [];
 
               // Define local GLOBALS to expose every models in this file.
               GLOBALS[definition.globalId] = {};

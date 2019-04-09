@@ -17,7 +17,7 @@ const {
   loadApis,
   loadMiddlewares,
   loadHooks,
-  appConfigurations,
+  bootstrap,
   plugins,
   admin,
   store,
@@ -101,7 +101,7 @@ class Strapi extends EventEmitter {
       // Load the app.
       await this.load();
       // Run bootstrap function.
-      await this.bootstrap();
+      await this.runBootstrapFunctions();
       // Freeze object.
       await this.freeze();
       // Update source admin.
@@ -256,7 +256,7 @@ class Strapi extends EventEmitter {
     this.hook = await loadHooks(this.config);
 
     // Populate AST with configurations.
-    await appConfigurations.call(this);
+    await bootstrap.call(this);
     // Usage.
     await utils.usage(this.config);
     // Init core store
@@ -319,7 +319,7 @@ class Strapi extends EventEmitter {
     return reload;
   }
 
-  async bootstrap() {
+  async runBootstrapFunctions() {
     const execBootstrap = fn => {
       if (!fn) return Promise.resolve();
 
