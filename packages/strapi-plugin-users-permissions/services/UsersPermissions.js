@@ -212,7 +212,7 @@ module.exports = {
     return _.merge({ application: routes }, pluginsRoutes);
   },
 
-  updatePermissions: async function (cb) {
+  updatePermissions: async function () {
     // fetch all the current permissions from the database, and format them into an array of actions.
     const databasePermissions = await strapi.query('permission', 'users-permissions').find({ _limit: -1 });
     const actions = databasePermissions
@@ -297,11 +297,7 @@ module.exports = {
           Promise.all(toRemove.map(action => strapi.query('permission', 'users-permissions').removePermission(action)))
         ])
       );
-
-      return this.writeActions(currentActions, cb);
     }
-
-    cb();
   },
 
   removeDuplicate: async function () {
@@ -312,8 +308,6 @@ module.exports = {
       _sort: `${primaryKey}`,
       _limit: -1
     });
-
-  
 
     const value = permissions.reduce((acc, permission) => {
       const index = acc.toKeep.findIndex(element => element === `${permission.type}.controllers.${permission.controller}.${permission.action}.${permission.role[primaryKey]}`);
@@ -336,14 +330,17 @@ module.exports = {
   },
 
   initialize: async function (cb) {
-    const roles = await strapi.query('role', 'users-permissions').count();
+    const roleCount = await strapi.query('role', 'users-permissions').count();
 
     // It has already been initialized.
-    if (roles > 0) {
-      return await this.updatePermissions(async () => {
+    if (roleCount > 0) {
+      try {
+        await this.updatePermissions();
         await this.removeDuplicate();
-        cb();
-      });
+        return cb();
+      } catch (err) {
+        return cb(err);
+      }
     }
 
     // Create two first default roles.
@@ -365,7 +362,8 @@ module.exports = {
       })
     ]);
 
-    await this.updatePermissions(cb);
+    
+    this.updatePermissions().then(() => cb(), err => cb(err));
   },
 
   updateRole: async function (roleID, body) {
@@ -432,28 +430,6 @@ module.exports = {
     }, {
       role: role.toString()
     });
-  },
-
-  writeActions: (data, cb) => {
-    const actionsPath = path.join(strapi.config.appPath, 'extensions', 'users-permissions', 'config', 'actions.json');
-
-    try {
-      // Disable auto-reload.
-      strapi.reload.isWatching = false;
-      if (!strapi.config.currentEnvironment.server.production) {
-        // Rewrite actions.json file.
-        fs.ensureFileSync(actionsPath);
-        fs.writeFileSync(actionsPath, JSON.stringify({ actions: data }), 'utf8');
-      }
-      // Set value to AST to avoid restart.
-      _.set(strapi.plugins['users-permissions'], 'config.actions', data);
-      // Disable auto-reload.
-      strapi.reload.isWatching = true;
-
-      cb();
-    } catch(err) {
-      strapi.log.error(err);
-    }
   },
 
   template: (layout, data) => {
