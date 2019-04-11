@@ -27,12 +27,6 @@ const initializeMiddlewares = require('./middlewares');
 const initializeHooks = require('./hooks');
 const createStrapiFs = require('./core/fs');
 
-const getPrefixedDependencies = (prefix, pkgJSON) => {
-  return Object.keys(pkgJSON.dependencies)
-    .filter(d => d.startsWith(prefix))
-    .map(pkgName => pkgName.substring(prefix.length + 1));
-};
-
 /**
  * Construct an Strapi instance.
  *
@@ -40,7 +34,7 @@ const getPrefixedDependencies = (prefix, pkgJSON) => {
  */
 
 class Strapi extends EventEmitter {
-  constructor() {
+  constructor({ appPath }) {
     super();
 
     this.setMaxListeners(100);
@@ -73,7 +67,7 @@ class Strapi extends EventEmitter {
     // Default configurations.
     this.config = {
       launchedAt: Date.now(),
-      appPath: process.cwd(),
+      appPath: appPath || process.cwd(),
       host: process.env.HOST || process.env.HOSTNAME || 'localhost',
       port: process.env.PORT || 1337,
       environment: _.toLower(process.env.NODE_ENV) || 'development',
@@ -239,9 +233,9 @@ class Strapi extends EventEmitter {
     const pkgJSON = require(path.resolve(this.config.appPath, 'package.json'));
     Object.assign(this.config, {
       info: pkgJSON,
-      installedPlugins: getPrefixedDependencies('strapi-plugin', pkgJSON),
-      installedMiddlewares: getPrefixedDependencies('strapi-middleware', pkgJSON),
-      installedHooks: getPrefixedDependencies('strapi-hook', pkgJSON),
+      installedPlugins: getPrefixedDeps('strapi-plugin', pkgJSON),
+      installedMiddlewares: getPrefixedDeps('strapi-middleware', pkgJSON),
+      installedHooks: getPrefixedDeps('strapi-hook', pkgJSON),
     });
 
     // load configs
@@ -250,7 +244,7 @@ class Strapi extends EventEmitter {
     _.merge(this, await loadApis(this.config));
 
     // load middlewares
-    const { middlewares, koaMiddlewares } = await loadMiddlewares(this.config);
+    const { middlewares, koaMiddlewares } = await loadMiddlewares(this);
     this.middleware = middlewares;
     this.koaMiddlewares = koaMiddlewares;
 
@@ -262,14 +256,14 @@ class Strapi extends EventEmitter {
      */
     const extensions = await loadExtensions(this.config);
     // merge extensions config folders
-    _.merge(strapi.plugins, extensions.configs);
+    _.merge(this.plugins, extensions.configs);
     // overwrite plugins with extensions overwrites
     extensions.overwrites.forEach(({ path, mod }) =>
-      _.set(strapi.plugins, path, mod)
+      _.set(this.plugins, path, mod)
     );
 
     // Populate AST with configurations.
-    await bootstrap.call(this);
+    await bootstrap(this);
     // Usage.
     await utils.usage(this.config);
     // Init core store
@@ -481,4 +475,14 @@ class Strapi extends EventEmitter {
   }
 }
 
-module.exports = new Strapi();
+const getPrefixedDeps = (prefix, pkgJSON) => {
+  return Object.keys(pkgJSON.dependencies)
+    .filter(d => d.startsWith(prefix))
+    .map(pkgName => pkgName.substring(prefix.length + 1));
+};
+
+module.exports = options => {
+  const strapi = new Strapi(options);
+  global.strapi = strapi;
+  return strapi;
+};
