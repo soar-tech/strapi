@@ -51,6 +51,8 @@ module.exports = (mongoose = Mongoose) => {
         case 'string':
         case 'text':
           return 'String';
+        case 'object':
+          return 'Object'
         default:
       }
     },

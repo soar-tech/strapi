@@ -1,0 +1,17 @@
+.multiSelectContainer {
+  padding: 0 15px;
+  margin: 1.3rem 0;
+
+  label {
+  margin-bottom: 15px;
+  }
+
+  .multiSelect {
+    background: lighten(lightgrey, 0.3);
+    padding: 15px 0;
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+}
