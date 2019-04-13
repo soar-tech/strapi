@@ -66,11 +66,29 @@ class InputObject extends React.Component {
                 className={className}
                 disabled={disabled}
                 name={currentKey}
-                onBlur={onBlur}
+                onBlur={e => {
+                  value[lowercaseKey] = e.target.checked;
+                  const newData = {
+                    target: {
+                      value: value,
+                      name: name
+                    }
+                  }
+                  onBlur(newData);
+                }}
                 onFocus={onFocus}
                 style={style}
                 tabIndex={tabIndex}
-                onChange={onChange}
+                onChange={e => {
+                  value[lowercaseKey] = e.target.checked;
+                  const newData = {
+                    target: {
+                      value: value,
+                      name: name
+                    }
+                  }
+                  onChange(newData);
+                }}
               />
             )
           })}
