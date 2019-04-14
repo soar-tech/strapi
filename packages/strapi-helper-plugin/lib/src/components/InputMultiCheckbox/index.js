@@ -6,27 +6,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { isEmpty, isFunction, isObject } from 'lodash';
 import InputCheckboxWithErrors from 'components/InputCheckboxWithErrors';
 import Label from 'components/Label';
-import cn from 'classnames';
 
 import styles from './styles.scss';
 
 /* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable jsx-a11y/label-has-for */
-class InputObject extends React.Component {
-  handleChange = () => {
-    const target = {
-      name: this.props.name,
-      type: 'checkbox',
-      value: !this.props.value,
-    };
-
-    this.props.onChange({ target });
-  }
-
+class InputMultiCheckbox extends React.Component {
   render() {
     const {
       autoFocus,
@@ -38,10 +25,10 @@ class InputObject extends React.Component {
       labelClassName,
       onBlur,
       onFocus,
-      style,
-      tabIndex,
-      value,
       onChange,
+      style,
+      value,
+      tabIndex,
       validations: { object }
     } = this.props;
 
@@ -59,18 +46,38 @@ class InputObject extends React.Component {
             const lowercaseKey = object[keyName].toLowerCase();
             const currentKey = object[keyName];
             return (
-              <InputCheckboxWithErrors 
-                value={value[lowercaseKey]} 
-                label={label}
+              <InputCheckboxWithErrors
+                multiselect={true} 
+                value={value ? value[lowercaseKey] : false} 
+                label={currentKey}
                 autoFocus={autoFocus}
                 className={className}
                 disabled={disabled}
                 name={currentKey}
-                onBlur={onBlur}
+                onBlur={e => {
+                  value[lowercaseKey] = e.target.checked;
+                  const newData = {
+                    target: {
+                      value: value,
+                      name: name
+                    }
+                  }
+                  onBlur(newData);
+                }}
                 onFocus={onFocus}
                 style={style}
                 tabIndex={tabIndex}
-                onChange={onChange}
+                onChange={e => {
+                  value[lowercaseKey] = e.target.checked;
+                  const newData = {
+                    target: {
+                      value: value,
+                      name: name
+                    }
+                  }
+                  onChange(newData);
+                }}
+                key={keyIndex}
               />
             )
           })}
@@ -111,7 +118,6 @@ InputObject.propTypes = {
   onFocus: PropTypes.func,
   style: PropTypes.object,
   tabIndex: PropTypes.string,
-  value: PropTypes.object,
 };
 
-export default InputObject;
+export default InputMultiCheckbox;

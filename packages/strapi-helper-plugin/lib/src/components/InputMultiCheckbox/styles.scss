@@ -7,8 +7,12 @@
   }
 
   .multiSelect {
-    background: lighten(lightgrey, 0.3);
+    background: lightgrey;
     padding: 15px 0;
+  }
+
+  input {
+    margin: 0 10px;
   }
 }
 

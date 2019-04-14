@@ -21,7 +21,7 @@ import InputPasswordWithErrors from 'components/InputPasswordWithErrors';
 import InputTextAreaWithErrors from 'components/InputTextAreaWithErrors';
 import InputTextWithErrors from 'components/InputTextWithErrors';
 import InputToggleWithErrors from 'components/InputToggleWithErrors';
-import InputObject from 'components/InputObject';
+import InputMultiCheckbox from 'components/InputMultiCheckbox';
 
 const DefaultInputError = ({ type }) => <div>Your input type: <b>{type}</b> does not exist</div>;
 
@@ -39,7 +39,7 @@ const inputs = {
   text: InputTextWithErrors,
   textarea: InputTextAreaWithErrors,
   toggle: InputToggleWithErrors,
-  object: InputObject
+  object: InputMultiCheckbox
 };
 
 function InputsIndex(props) {

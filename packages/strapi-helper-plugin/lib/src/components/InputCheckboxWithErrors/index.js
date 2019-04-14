@@ -11,10 +11,10 @@ import { isEmpty, isObject, isFunction } from 'lodash';
 import cn from 'classnames';
 
 // Design
-import InputDescription from '../InputDescription';
-import InputErrors from '../InputErrors';
-import InputCheckbox from '../InputCheckbox';
-import InputSpacer from '../InputSpacer';
+import InputDescription from 'components/InputDescription';
+import InputErrors from 'components/InputErrors';
+import InputCheckbox from 'components/InputCheckbox';
+import InputSpacer from 'components/InputSpacer';
 
 import styles from './styles.scss';
 
@@ -62,6 +62,7 @@ class InputCheckboxWithErrors extends React.Component {
       tabIndex,
       title,
       value,
+      multiselect,
     } = this.props;
 
     const handleBlur = onBlur ? onBlur : () => {};
@@ -84,7 +85,6 @@ class InputCheckboxWithErrors extends React.Component {
     if (isFunction(title)) {
       inputTitle = title();
     }
-
     return (
       <div
         className={cn(
@@ -96,6 +96,7 @@ class InputCheckboxWithErrors extends React.Component {
       >
         {inputTitle}
         <InputCheckbox
+          multiselect={multiselect}
           autoFocus={autoFocus}
           className={inputClassName}
           disabled={disabled}
